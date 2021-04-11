@@ -1,0 +1,9 @@
+# Folders
+node_modules
+logs
+
+# File types
+**/*.json
+**/*.yml
+**/*.db
+**/*.md
