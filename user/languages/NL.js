@@ -40,7 +40,6 @@ module.exports = {
   },
   modules: {
     executeCommand: {
-      message: {
         text: {
   
         },
@@ -51,7 +50,6 @@ module.exports = {
           userUsedCommand: "{{ username }} used the '{{ commandName }}' command",
           errorWhileExecutingCommand: "An error occurred whilst executing the '{{ commandName }}' command"
         },
-      },
     }
   },
   events: {

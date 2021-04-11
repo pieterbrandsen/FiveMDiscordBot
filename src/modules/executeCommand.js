@@ -4,8 +4,7 @@ const log = new ChildLogger();
 
 const languageConfig = require(`../../user/languages/${require('../../user/config').language}`);
 
-const commandObject = languageConfig.events.message;
-const commandText = commandObject.command;
+const commandObject = languageConfig.modules.executeCommand;
 const { text } = commandObject;
 const { returnText } = commandObject;
 const { logText } = commandObject;

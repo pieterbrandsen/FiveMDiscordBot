@@ -10,6 +10,18 @@ const { text } = eventObject;
 const { returnText } = eventObject;
 const { logText } = eventObject;
 
+function registerCommand(client, guildId, filePath) {
+  const command = require(`../commands/${filePath}`);
+  client.commands.set(command.name, command);
+  client.api.applications(client.user.id).guilds(guildId).commands.post({
+    data: {
+      name: command.name,
+      description: command.description,
+    },
+  });
+  log.console(log.format(`> Loaded &7${command.name}&f command`));
+}
+
 module.exports = {
   event: 'ready',
   execute(client, args, { config }) {
@@ -39,24 +51,14 @@ module.exports = {
  */
     const commands = fs.readdirSync('src/commands').filter((file) => file.endsWith('.js'));
     for (const file of commands) {
-      const command = require(`../commands/${file}`);
-      client.commands.set(command.name, command);
-      log.console(log.format(`> Loaded &7${command.name}&f command`));
+          registerCommand(client, config.guildId, `${file}`);
     }
 
     fs.readdirSync('src/commands').forEach((item) => {
       if (!item.includes('.')) {
         const commands = fs.readdirSync(`src/commands/${item}`).filter((file) => file.endsWith('.js'));
         for (const file of commands) {
-          const command = require(`../commands/${item}/${file}`);
-          client.commands.set(command.name, command);
-          client.api.applications(client.user.id).guilds(config.guildId).commands.post({
-            data: {
-              name: command.name,
-              description: command.description,
-            },
-          });
-          log.console(log.format(`> Loaded &7${config.prefix}${command.name}&f command`));
+          registerCommand(client, config.guildId, `${item}/${file}`);
         }
       }
     });
