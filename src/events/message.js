@@ -16,7 +16,7 @@ module.exports = {
   async execute(client, [message], {
     config, Ticket, Solicitation, Setting,
   }) {
-    if (message.  channel.type == "dm") {
+    if (message.channel.type == "dm") {
       log.console(logText.dmMessage.replace("{{ username }}", message.author.tag).replace("{{ cleanMessage }}", message.cleanContent));
     }
 

@@ -11,7 +11,7 @@ const { logText } = commandObject;
 const Discord = require('discord.js');
 
 module.exports = {
-  async execute(interaction, client) {
+  async execute(interaction, client, {config}) {
     async function createApiMessage(interaction, content) {
       const apiMessage = await Discord.APIMessage.create(client.channels.resolve(interaction.channel_id), content)
         .resolveData()
@@ -25,16 +25,29 @@ module.exports = {
 
     const command = client.commands.get(commandName)
     || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
-
     try {
-      const message = command.execute(client, args, interaction);
-      client.api.interactions(interaction.id, interaction.token).callback.post({
-        data: {
-          type: 4,
-          data: await createApiMessage(interaction, message),
-        },
-      });
-      log.console(logText.userUsedCommand.replace('{{ username }}', interaction.member.user.username).replace('{{ commandName }}', commandName));
+      const guild = await client.guilds.fetch(interaction.guild_id);
+      const user = await guild.members.fetch(interaction.member.user.id)
+      let message = "";
+      if (command.permission && !user.hasPermission(command.permission)) {
+        log.console(logText.userHasNoCommandPerms.replace("{{ username }}", interaction.member.user.username).replace("{{ commandName }}", commandName));
+        message =
+          new Discord.MessageEmbed()
+            .setColor(config.err_colour)
+            .setTitle(returnText.noPermsEmbedTitle)
+            .setDescription(returnText.noPermsEmbedDescription.replace("{{ commandName }}", command.name).replace("{{ commandPerms }}", command.permission))
+      }
+      else {
+        message = command.execute(client, args, interaction);
+        log.console(logText.userUsedCommand.replace('{{ username }}', interaction.member.user.username).replace('{{ commandName }}', commandName));
+      }
+
+    client.api.interactions(interaction.id, interaction.token).callback.post({
+      data: {
+        type: 4,
+        data: await createApiMessage(interaction, message),
+      },
+    });
     } catch (error) {
       log.warn(logText.errorWhileExecutingCommand.replace('{{ commandName }}', commandName));
       log.error(error);

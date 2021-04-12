@@ -17,14 +17,10 @@ module.exports = {
 
   commands: {
     basic: {
-      ip: {
+      ping: {
         commandText: {
           name: 'ping',
-          description: 'Check of de bot nog werkt',
-          usage: '',
-          aliases: [''],
-          example: 'ping',
-          args: false,
+          description: 'Check of de bot nog actief is',
           permission: '',
         },
         text: {
@@ -44,9 +40,11 @@ module.exports = {
   
         },
         returnText: {
-  
+          noPermsEmbedTitle: ":x: Geen permissie",
+          noPermsEmbedDescription: "**Je hebt geen permissie om \`{{ commandName }}\` te gebruiken** (bennodigd \`{{ commandPerms }}\`).",
         },
         logText: {
+          userHasNoCommandPerms: "{{ username }} tried to use the '{{ commandName }}' command without permission",
           userUsedCommand: "{{ username }} used the '{{ commandName }}' command",
           errorWhileExecutingCommand: "An error occurred whilst executing the '{{ commandName }}' command"
         },

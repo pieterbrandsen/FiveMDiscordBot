@@ -140,7 +140,7 @@ if (config.transcripts.text.enabled) {
 }
 
 client.ws.on('INTERACTION_CREATE', async (interaction) => {
-  require('./modules/executeCommand').execute(interaction, client);
+  require('./modules/executeCommand').execute(interaction, client, {config});
 });
 
 process.on('unhandledRejection', (error) => {
