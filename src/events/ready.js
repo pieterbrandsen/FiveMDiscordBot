@@ -28,7 +28,6 @@ module.exports = {
   execute(client, args, { config }) {
     log.success(logText.succesfullyAuthenticated.replace('{{ botTag }}', client.user.tag));
 
-    const updatePresence = () => {
       client.user.setPresence({
         activity: {
           name: config.activity,
@@ -36,11 +35,8 @@ module.exports = {
         },
       }).catch(log.error);
       log.debug(logText.updatedPressence.replace('{{ activityType }}', config.activityType).replace('{{ activityText }}', config.activity));
-    };
 
-    updatePresence();
-
-    /**
+      /**
  * command loader
  */
     const commands = fs.readdirSync('src/commands').filter((file) => file.endsWith('.js'));

@@ -24,7 +24,5 @@ module.exports = {
       .setColor(config.colour);
       return embed;
     }
-
-    return "";
   },
 };

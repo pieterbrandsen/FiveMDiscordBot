@@ -8,12 +8,12 @@ const commandObject = languageConfig.modules.executeCommand;
 const { text } = commandObject;
 const { returnText } = commandObject;
 const { logText } = commandObject;
-const Discord = require('discord.js');
+const {APIMessage} = require('discord.js');
 
 module.exports = {
   async execute(interaction, client, {config}) {
     async function createApiMessage(interaction, content) {
-      const apiMessage = await Discord.APIMessage.create(client.channels.resolve(interaction.channel_id), content)
+      const apiMessage = await APIMessage.create(client.channels.resolve(interaction.channel_id), content)
         .resolveData()
         .resolveFiles();
 
@@ -38,18 +38,21 @@ module.exports = {
             .setColor(config.err_colour)
             .setTitle(returnText.noPermsEmbedTitle)
             .setDescription(returnText.noPermsEmbedDescription.replace("{{ commandName }}", command.name).replace("{{ commandPerms }}", command.permission))
-      }
+        return;
+          }
       else {
         message = command.execute(client, args, interaction, {member, config});
-        log.console(logText.userUsedCommand.replace('{{ username }}', interaction.member.user.username).replace('{{ commandName }}', commandName));
       }
 
+      if (message !== undefined) {
     client.api.interactions(interaction.id, interaction.token).callback.post({
       data: {
         type: 4,
         data: await createApiMessage(interaction, message),
       },
     });
+  }
+  log.console(logText.userUsedCommand.replace('{{ username }}', interaction.member.user.username).replace('{{ commandName }}', commandName));
     } catch (error) {
       log.warn(logText.errorWhileExecutingCommand.replace('{{ commandName }}', commandName));
       log.error(error);
