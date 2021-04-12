@@ -17,6 +17,7 @@ function registerCommand(client, guildId, filePath) {
     data: {
       name: command.name,
       description: command.description,
+      options: command.options,
     },
   });
   log.console(log.format(`> Loaded &7${command.name}&f command`));
@@ -28,23 +29,16 @@ module.exports = {
     log.success(logText.succesfullyAuthenticated.replace('{{ botTag }}', client.user.tag));
 
     const updatePresence = () => {
-      const num = Math.floor(Math.random() * config.activities.length);
       client.user.setPresence({
         activity: {
-          name: `${config.activities[num]}  |  ${config.prefix}help`,
-          type: config.activity_types[num],
+          name: config.activity,
+          type:  config.activityType,
         },
       }).catch(log.error);
-      log.debug(logText.updatedPressence.replace('{{ activityType }}', config.activity_types[num]).replace('{{ activityText }}', config.activities[num]));
+      log.debug(logText.updatedPressence.replace('{{ activityType }}', config.activityType).replace('{{ activityText }}', config.activity));
     };
 
     updatePresence();
-    setInterval(() => {
-      updatePresence();
-    }, 15000);
-
-    if (client.guilds.cache.get(config.guildId).member(client.user).hasPermission('ADMINISTRATOR', false)) log.success(logText.administratorGranted);
-    else log.warn(logText.administratorMissing);
 
     /**
  * command loader

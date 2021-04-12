@@ -12,9 +12,10 @@ module.exports = {
   name: commandText.name,
   description: commandText.description,
   permission: commandText.permission,
-  execute(client, args, interaction) {
+  execute(client, args, interaction, {config}) {
     const embed = new MessageEmbed()
       .setTitle('Pong!')
+      .setColor(config.colour);
     return embed;
   },
 };

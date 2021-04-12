@@ -23,13 +23,15 @@ module.exports = {
     const commandName = interaction.data.name;
     const args = interaction.data.options;
 
-    const command = client.commands.get(commandName)
-    || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
+    const command = client.commands.get(`${commandName}.`) || client.commands.get(commandName);
+  
+    if (!command) return;
+
     try {
       const guild = await client.guilds.fetch(interaction.guild_id);
-      const user = await guild.members.fetch(interaction.member.user.id)
+      const member = await guild.members.fetch(interaction.member.user.id)
       let message = "";
-      if (command.permission && !user.hasPermission(command.permission)) {
+      if (command.permission && !member.hasPermission(command.permission)) {
         log.console(logText.userHasNoCommandPerms.replace("{{ username }}", interaction.member.user.username).replace("{{ commandName }}", commandName));
         message =
           new Discord.MessageEmbed()
@@ -38,7 +40,7 @@ module.exports = {
             .setDescription(returnText.noPermsEmbedDescription.replace("{{ commandName }}", command.name).replace("{{ commandPerms }}", command.permission))
       }
       else {
-        message = command.execute(client, args, interaction);
+        message = command.execute(client, args, interaction, {member, config});
         log.console(logText.userUsedCommand.replace('{{ username }}', interaction.member.user.username).replace('{{ commandName }}', commandName));
       }
 

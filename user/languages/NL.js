@@ -22,7 +22,8 @@ module.exports = {
           name: 'ping',
           description: 'Check of de bot nog actief is',
           permission: '',
-        },
+        options: ""
+      },
         text: {
         },
         returnText: {
@@ -33,6 +34,42 @@ module.exports = {
         },
       },
     },
+    suggestion: {
+      commandText: {
+        name: 'suggestie',
+        subNames: ["nieuw"],
+        description: 'Check of de bot nog actief is',
+        permission: '',
+        options: [                {
+          "name": "nieuw",
+          "description": "Maak een nieuwe suggestie aan",
+          "type": 1, // 1 is type SUB_COMMAND
+          "options": [
+            {
+                "name": "titel",
+                "description": "De titel boven aan je suggestie",
+                "type": 3,
+                "required": true
+            },
+            {
+              "name": "bericht",
+              "description": "Je suggestie uitgelegd",
+              "type": 3,
+              "required": true
+          }
+        ]
+      },
+    ]
+      },
+      text: {
+      },
+      returnText: {
+        suggestionFrom: "Suggestie van {{ displayName }}"
+      },
+      logText: {
+
+      },
+    }
   },
   modules: {
     executeCommand: {
