@@ -47,7 +47,7 @@ module.exports = {
       if (message !== undefined) {
     client.api.interactions(interaction.id, interaction.token).callback.post({
       data: {
-        type: 4,
+        type: 1,
         data: await createApiMessage(interaction, message),
       },
     });

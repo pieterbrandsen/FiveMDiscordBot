@@ -10,16 +10,18 @@ const { text } = eventObject;
 const { returnText } = eventObject;
 const { logText } = eventObject;
 
-function registerCommand(client, guildId, filePath) {
+function registerCommand(client, guildArray, filePath) {
   const command = require(`../commands/${filePath}`);
   client.commands.set(command.name, command);
-  client.api.applications(client.user.id).guilds(guildId).commands.post({
+  guildArray.forEach(guild => {
+  client.api.applications(client.user.id).guilds(guild.id).commands.post({
     data: {
       name: command.name,
       description: command.description,
       options: command.options,
     },
   });
+});
   log.console(log.format(`> Loaded &7${command.name}&f command`));
 }
 
@@ -41,14 +43,14 @@ module.exports = {
  */
     const commands = fs.readdirSync('src/commands').filter((file) => file.endsWith('.js'));
     for (const file of commands) {
-          registerCommand(client, config.guildId, `${file}`);
+          registerCommand(client, client.guilds.cache, `${file}`);
     }
 
     fs.readdirSync('src/commands').forEach((item) => {
       if (!item.includes('.')) {
         const commands = fs.readdirSync(`src/commands/${item}`).filter((file) => file.endsWith('.js'));
         for (const file of commands) {
-          registerCommand(client, config.guildId, `${item}/${file}`);
+          registerCommand(client, client.guilds.cache, `${item}/${file}`);
         }
       }
     });
