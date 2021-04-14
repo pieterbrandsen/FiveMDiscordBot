@@ -15,6 +15,7 @@ module.exports = {
   execute(client, args, interaction, {config}) {
     const embed = new MessageEmbed()
       .setTitle('Pong!')
+      .setDescription(returnText.currentPing.replace("{{ value }}", client.ws.ping))
       .setColor(config.colour);
     return embed;
   },

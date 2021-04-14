@@ -1,0 +1,23 @@
+{
+  "token": "NzUwMDM3MjE2MTE3MzkxMzgw.X00slw.P2Z3zTT1d0jbwAPM3PA0u027hSw",
+  "language:": "NL",
+  "serverName": "PandaBot",
+  "activity": "development of this bot",
+  "activityType": "WATCHING",
+  "colour": "#009999",
+  "err_colour": "#E74C3C",
+  "suggestionChannelId": "830788726811656224",
+  "storage": {
+    "type": "sqlite"
+  },
+  "logs": {
+    "files": {
+      "enabled": true,
+      "keep_for": 7
+    }
+  },
+  "debug": false,
+  "dev": false,
+  "language2": "NL2",
+  "language": "EN"
+}

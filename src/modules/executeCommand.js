@@ -12,8 +12,8 @@ const {APIMessage} = require('discord.js');
 
 module.exports = {
   async execute(interaction, client, {config}) {
-    async function createApiMessage(interaction, content) {
-      const apiMessage = await APIMessage.create(client.channels.resolve(interaction.channel_id), content)
+    async function createApiMessage(channel, content) {
+      const apiMessage = await APIMessage.create(channel, content)
         .resolveData()
         .resolveFiles();
 
@@ -29,6 +29,7 @@ module.exports = {
 
     try {
       const guild = await client.guilds.fetch(interaction.guild_id);
+      const channel = await client.channels.fetch(interaction.channel_id);
       const member = await guild.members.fetch(interaction.member.user.id)
       let message = "";
       if (command.permission && !member.hasPermission(command.permission)) {
@@ -41,18 +42,16 @@ module.exports = {
         return;
           }
       else {
-        message = command.execute(client, args, interaction, {member, config});
+        message = await command.execute(client, args, interaction, {member, channel, config});
       }
 
-      if (message !== undefined) {
     client.api.interactions(interaction.id, interaction.token).callback.post({
       data: {
-        type: 1,
-        data: await createApiMessage(interaction, message),
+        type: 4,
+        data: await createApiMessage(channel, message),
       },
     });
-  }
-  log.console(logText.userUsedCommand.replace('{{ username }}', interaction.member.user.username).replace('{{ commandName }}', commandName));
+      log.console(logText.userUsedCommand.replace('{{ username }}', interaction.member.user.username).replace('{{ commandName }}', commandName));
     } catch (error) {
       log.warn(logText.errorWhileExecutingCommand.replace('{{ commandName }}', commandName));
       log.error(error);

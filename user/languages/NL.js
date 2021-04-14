@@ -27,7 +27,7 @@ module.exports = {
         text: {
         },
         returnText: {
-
+          currentPing: "Mijn huidige ping is **{{ value }}**"
         },
         logText: {
 
@@ -64,7 +64,11 @@ module.exports = {
       text: {
       },
       returnText: {
-        suggestionFrom: "Suggestie van {{ displayName }}"
+        suggestionFrom: "Suggestie van {{ displayName }}",
+        createdSuggestion: {
+          title: "Je suggestie is aangemaakt!",
+          description: "Hij verstuurd in <#{{ suggestionChannelId }}>"
+        }
       },
       logText: {
 

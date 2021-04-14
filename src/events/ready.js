@@ -54,5 +54,7 @@ module.exports = {
         }
       }
     });
+
+  log.info(`Loaded ${client.commands.size} commands`);
   },
 };
