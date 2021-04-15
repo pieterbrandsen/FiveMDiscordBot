@@ -33,6 +33,26 @@ module.exports = {
 
         },
       },
+        config: {
+          commandText: {
+            name: 'config',
+            subNames: ["initialiseer"],
+            description: 'Pas de de config aan voor de server',
+            permission: 'ADMINISTRATOR',
+            options: [                {
+              "name": "initialiseer",
+              "description": "Maak de config opnieuw aan",
+          },
+        ]
+          },
+          text: {
+          },
+          returnText: {
+          },
+          logText: {
+    
+          },
+      }
     },
     suggestion: {
       commandText: {
