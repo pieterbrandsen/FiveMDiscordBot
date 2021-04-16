@@ -2,13 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const fetchTimeout = require('fetch-timeout');
 
-const dev = fs.existsSync('user/dev.env') && fs.existsSync('user/dev.config.js');
+require('dotenv').config({ path: 'user/.env'});
 
-require('dotenv').config({ path: path.join('user/', dev ? 'dev.env' : '.env') });
-
-module.exports.config = dev ? 'dev.config.js' : 'config.js';
-const config = require(path.join('../user/', module.exports.config));
-
+const config = require('../user/config.json');
 const Discord = require('discord.js');
 
 const client = new Discord.Client();
@@ -35,10 +31,6 @@ const log = new Logger({
   maxAge: config.logs.files.keep_for,
   debug: config.debug,
 });
-
-log.multi(log); // required to allow other files to access the logger
-
-// require('./modules/updater').execute(client, config); // check for updates
 
 /**
  * storage
@@ -71,7 +63,6 @@ const events = fs.readdirSync('src/events').filter((file) => file.endsWith('.js'
 for (const file of events) {
   const event = require(`./events/${file}`);
   client.events.set(event.event, event);
-  // client.on(event.event, e => client.events.get(event.event).execute(client, e, Ticket, Setting));
   client.on(event.event, (e1, e2) => client.events.get(event.event).execute(client, [e1, e2], {
     config, Setting,
   }));

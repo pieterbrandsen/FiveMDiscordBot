@@ -2,9 +2,9 @@ const { Collection, MessageEmbed } = require('discord.js');
 const { ChildLogger } = require('leekslazylogger');
 
 const log = new ChildLogger();
-const archive = require('../modules/archive');
 
-const languageConfig = require(`../../user/languages/${require('../../user/config').language}`);
+const config = require('../../user/config');
+const languageConfig = require(`../../user/languages/${config.language}`);
 
 const eventObject = languageConfig.events.message;
 const { text } = eventObject;

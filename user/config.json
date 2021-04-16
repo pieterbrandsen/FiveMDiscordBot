@@ -1,12 +1,12 @@
 {
   "token": "NzUwMDM3MjE2MTE3MzkxMzgw.X00slw.P2Z3zTT1d0jbwAPM3PA0u027hSw",
-  "language:": "NL",
-  "serverName": "PandaBot",
-  "activity": "development of this bot",
+  "language": "NL",
+  "serverName": "test Server Naam",
+  "activity": "the bot developing itself :)",
   "activityType": "WATCHING",
   "colour": "#009999",
   "err_colour": "#E74C3C",
-  "suggestionChannelId": "830788726811656224",
+  "suggestionChannelId": "830788726811656225",
   "storage": {
     "type": "sqlite"
   },
@@ -17,7 +17,5 @@
     }
   },
   "debug": false,
-  "dev": false,
-  "language2": "NL2",
-  "language": "EN"
+  "dev": false
 }

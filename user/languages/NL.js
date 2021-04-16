@@ -33,27 +33,47 @@ module.exports = {
 
         },
       },
-        config: {
-          commandText: {
-            name: 'config',
-            subNames: ["initialiseer"],
-            description: 'Pas de de config aan voor de server',
-            permission: 'ADMINISTRATOR',
-            options: [                {
-              "name": "initialiseer",
-              "description": "Maak de config opnieuw aan",
-          },
-        ]
-          },
-          text: {
-          },
-          returnText: {
-          },
-          logText: {
-    
-          },
-      }
     },
+    config: {
+      commandText: {
+        name: 'config',
+        subNames: ["initialiseer"],
+        description: 'Pas de de config aan voor de server',
+        permission: 'ADMINISTRATOR',
+        options: [                {
+          "name": "initialiseer",
+          "description": "Maak de config opnieuw aan",
+          "type": 1, // 1 is type SUB_COMMAND
+      },
+    ]
+      },
+      text: {
+        changeConfigValueMessage: {
+          title: "Pas het veld '{{ configValueName }}' aan",
+          description: "Stuur in **1** bericht naar wat je dit veld naar wilt aanpassen.",
+        },
+        changeableConfigValues: [
+          "serverName",
+          "suggestionChannelId",
+        ],
+      },
+      returnText: {
+        startedUpdatingConfig: {
+          title: 'Stel alle config velden in',
+        },
+        messageCollectorEnd: {
+          title:"Succesvol de config aangepast",
+          description:"Vanaf nu zullen de aangepaste velden gebruikt worden",
+        },
+        messageCollectorExpired: {
+          title:"Je deed er te lang over om de config te updaten!",
+          description:"De wijzingen worden terug gedraaid, probeer later opnieuw",
+        },
+      },
+      logText: {
+
+      },
+  },
     suggestion: {
       commandText: {
         name: 'suggestie',
@@ -88,6 +108,12 @@ module.exports = {
         createdSuggestion: {
           title: "Je suggestie is aangemaakt!",
           description: "Hij verstuurd in <#{{ suggestionChannelId }}>"
+        },
+        noSuggestionChannelEmbed: {
+          title:"Ik kon geen suggestie kanaal vinden",
+          description: `Het suggestie kanaal is niet juist ingesteld
+          
+          Contacteer de bot eigenaar voor support of vraag aan staff om hulp`
         }
       },
       logText: {
