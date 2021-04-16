@@ -14,6 +14,16 @@ module.exports = {
   permission: commandText.permission,
   options: commandText.options,
   async execute(client, args, interaction, {member, config}) {
+    let suggestionChannel = null;
+    try {
+      suggestionChannel = await client.channels.fetch(config.suggestionChannelId);
+    } catch (error) {
+    }
+
+    if (suggestionChannel === null) {
+      return new MessageEmbed().setTitle(returnText.noSuggestionChannelEmbed.title).setDescription(returnText.noSuggestionChannelEmbed.description);
+    }
+
     if (args[0].name == commandText.subNames[0]) {
       const title = args[0].options[0].value;
       const message = args[0].options[1].value;
@@ -23,7 +33,6 @@ module.exports = {
       .setFooter(returnText.suggestionFrom.replace("{{ displayName }}", member.displayName))
       .setColor(config.colour);
 
-      var suggestionChannel = await client.channels.fetch(config.suggestionChannelId);
       var msg= await suggestionChannel.send(suggestionEmbed)
       await msg.react("👍");
       await msg.react("👎");
