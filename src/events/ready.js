@@ -4,6 +4,7 @@ const fs = require('fs');
 const log = new ChildLogger();
 
 const config = require('../../user/config');
+
 const languageConfig = require(`../../user/languages/${config.language}`);
 
 const eventObject = languageConfig.events.ready;
@@ -14,15 +15,15 @@ const { logText } = eventObject;
 function registerCommand(client, guildArray, filePath) {
   const command = require(`../commands/${filePath}`);
   client.commands.set(command.name, command);
-  guildArray.forEach(guild => {
-  client.api.applications(client.user.id).guilds(guild.id).commands.post({
-    data: {
-      name: command.name,
-      description: command.description,
-      options: command.options,
-    },
+  guildArray.forEach((guild) => {
+    client.api.applications(client.user.id).guilds(guild.id).commands.post({
+      data: {
+        name: command.name,
+        description: command.description,
+        options: command.options,
+      },
+    });
   });
-});
   log.console(log.format(`> Loaded &7${command.name}&f command`));
 }
 
@@ -31,20 +32,20 @@ module.exports = {
   execute(client, args, { config }) {
     log.success(logText.succesfullyAuthenticated.replace('{{ botTag }}', client.user.tag));
 
-      client.user.setPresence({
-        activity: {
-          name: config.activity,
-          type:  config.activityType,
-        },
-      }).catch(log.error);
-      log.debug(logText.updatedPressence.replace('{{ activityType }}', config.activityType).replace('{{ activityText }}', config.activity));
+    client.user.setPresence({
+      activity: {
+        name: config.activity,
+        type: config.activityType,
+      },
+    }).catch(log.error);
+    log.debug(logText.updatedPressence.replace('{{ activityType }}', config.activityType).replace('{{ activityText }}', config.activity));
 
-      /**
+    /**
  * command loader
  */
     const commands = fs.readdirSync('src/commands').filter((file) => file.endsWith('.js'));
     for (const file of commands) {
-          registerCommand(client, client.guilds.cache, `${file}`);
+      registerCommand(client, client.guilds.cache, `${file}`);
     }
 
     fs.readdirSync('src/commands').forEach((item) => {
@@ -56,6 +57,6 @@ module.exports = {
       }
     });
 
-  log.info(`Loaded ${client.commands.size} commands`);
+    log.info(`Loaded ${client.commands.size} commands`);
   },
 };

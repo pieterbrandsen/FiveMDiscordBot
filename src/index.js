@@ -2,10 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const fetchTimeout = require('fetch-timeout');
 
-require('dotenv').config({ path: 'user/.env'});
+require('dotenv').config({ path: 'user/.env' });
 
-const config = require('../user/config.json');
 const Discord = require('discord.js');
+const config = require('../user/config.json');
 
 const client = new Discord.Client();
 // const client = new Discord.Client({
@@ -72,7 +72,7 @@ for (const file of events) {
 log.info(`Loaded ${events.length} events`);
 
 client.ws.on('INTERACTION_CREATE', async (interaction) => {
-  require('./modules/executeCommand').execute(interaction, client, {config});
+  require('./modules/executeCommand').execute(interaction, client, { config });
 });
 
 process.on('unhandledRejection', (error) => {

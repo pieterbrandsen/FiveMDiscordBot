@@ -22,12 +22,12 @@ module.exports = {
           name: 'ping',
           description: 'Check of de bot nog actief is',
           permission: '',
-        options: ""
-      },
+          options: '',
+        },
         text: {
         },
         returnText: {
-          currentPing: "Mijn huidige ping is **{{ value }}**"
+          currentPing: 'Mijn huidige ping is **{{ value }}**',
         },
         logText: {
 
@@ -37,105 +37,115 @@ module.exports = {
     config: {
       commandText: {
         name: 'config',
-        subNames: ["initialiseer"],
+        subNames: ['initialiseer'],
         description: 'Pas de de config aan voor de server',
         permission: 'ADMINISTRATOR',
-        options: [                {
-          "name": "initialiseer",
-          "description": "Maak de config opnieuw aan",
-          "type": 1, // 1 is type SUB_COMMAND
-      },
-    ]
+        options: [{
+          name: 'initialiseer',
+          description: 'Maak de config opnieuw aan',
+          type: 1, // 1 is type SUB_COMMAND
+        },
+        ],
       },
       text: {
         changeConfigValueMessage: {
           title: "Pas het veld '{{ configValueName }}' aan",
-          description: "Stuur in **1** bericht naar wat je dit veld naar wilt aanpassen.",
+        },
+        changeConfigValueOfObjectValueMessage: {
+          title: "Pas het veld '{{ configValueName }}' van het object '{{ configObjectName }}' aan",
         },
         changeableConfigValues: [
-          "serverName",
-          "suggestionChannelId",
+          {name:'serverName', description: "Vul de naam in die je wilt gebruiken als 'server naam'."},
         ],
+        changeableConfigObjects: {
+          suggestion: [
+            {name:'enabled', description: "Vul 'TRUE' in als je suggesties wil gebruiken. Alles wat je anders invult zal de suggesties onbruikbaar maken."},
+            {name:'channelId', description: 'Als je de suggesties aangezet hebt kan je nu het id van het suggestie kanaal invoeren.'},
+          ],
+        },
       },
       returnText: {
         startedUpdatingConfig: {
           title: 'Stel alle config velden in',
         },
         messageCollectorEnd: {
-          title:"Succesvol de config aangepast",
-          description:"Vanaf nu zullen de aangepaste velden gebruikt worden",
+          title: 'Succesvol de config aangepast',
+          description: 'Vanaf nu zullen de aangepaste velden gebruikt worden',
         },
         messageCollectorExpired: {
-          title:"Je deed er te lang over om de config te updaten!",
-          description:"De wijzingen worden terug gedraaid, probeer later opnieuw",
+          title: 'Je deed er te lang over om de config te updaten!',
+          description: 'De wijzingen worden terug gedraaid, probeer later opnieuw',
         },
       },
       logText: {
 
       },
-  },
+    },
     suggestion: {
       commandText: {
         name: 'suggestie',
-        subNames: ["nieuw"],
+        subNames: ['nieuw'],
         description: 'Check of de bot nog actief is',
         permission: '',
-        options: [                {
-          "name": "nieuw",
-          "description": "Maak een nieuwe suggestie aan",
-          "type": 1, // 1 is type SUB_COMMAND
-          "options": [
+        options: [{
+          name: 'nieuw',
+          description: 'Maak een nieuwe suggestie aan',
+          type: 1, // 1 is type SUB_COMMAND
+          options: [
             {
-                "name": "titel",
-                "description": "De titel boven aan je suggestie",
-                "type": 3,
-                "required": true
+              name: 'titel',
+              description: 'De titel boven aan je suggestie',
+              type: 3,
+              required: true,
             },
             {
-              "name": "bericht",
-              "description": "Je suggestie uitgelegd",
-              "type": 3,
-              "required": true
-          }
-        ]
-      },
-    ]
+              name: 'bericht',
+              description: 'Je suggestie uitgelegd',
+              type: 3,
+              required: true,
+            },
+          ],
+        },
+        ],
       },
       text: {
       },
       returnText: {
-        suggestionFrom: "Suggestie van {{ displayName }}",
+        suggestionNotEnabled: {
+          title: "De suggesties staan uit, contacteer staff als je denkt dat dit niet correct is!",
+        },
+        suggestionFrom: 'Suggestie van {{ displayName }}',
         createdSuggestion: {
-          title: "Je suggestie is aangemaakt!",
-          description: "Hij verstuurd in <#{{ suggestionChannelId }}>"
+          title: 'Je suggestie is aangemaakt!',
+          description: 'Hij verstuurd in <#{{ suggestionChannelId }}>',
         },
         noSuggestionChannelEmbed: {
-          title:"Ik kon geen suggestie kanaal vinden",
+          title: 'Ik kon geen suggestie kanaal vinden',
           description: `Het suggestie kanaal is niet juist ingesteld
           
-          Contacteer de bot eigenaar voor support of vraag aan staff om hulp`
-        }
+          Contacteer de bot eigenaar voor support of vraag aan staff om hulp`,
+        },
       },
       logText: {
 
       },
-    }
+    },
   },
   modules: {
     executeCommand: {
-        text: {
-  
-        },
-        returnText: {
-          noPermsEmbedTitle: ":x: Geen permissie",
-          noPermsEmbedDescription: "**Je hebt geen permissie om \`{{ commandName }}\` te gebruiken** (bennodigd \`{{ commandPerms }}\`).",
-        },
-        logText: {
-          userHasNoCommandPerms: "{{ username }} tried to use the '{{ commandName }}' command without permission",
-          userUsedCommand: "{{ username }} used the '{{ commandName }}' command",
-          errorWhileExecutingCommand: "An error occurred whilst executing the '{{ commandName }}' command"
-        },
-    }
+      text: {
+
+      },
+      returnText: {
+        noPermsEmbedTitle: ':x: Geen permissie',
+        noPermsEmbedDescription: '**Je hebt geen permissie om \`{{ commandName }}\` te gebruiken** (bennodigd \`{{ commandPerms }}\`).',
+      },
+      logText: {
+        userHasNoCommandPerms: "{{ username }} tried to use the '{{ commandName }}' command without permission",
+        userUsedCommand: "{{ username }} used the '{{ commandName }}' command",
+        errorWhileExecutingCommand: "An error occurred whilst executing the '{{ commandName }}' command",
+      },
+    },
   },
   events: {
     message: {
@@ -146,7 +156,7 @@ module.exports = {
 
       },
       logText: {
-        dmMessage: "Received a DM from {{ username }}: {{ cleanMessage }}",
+        dmMessage: 'Received a DM from {{ username }}: {{ cleanMessage }}',
       },
     },
     rateLimit: {

@@ -1,12 +1,19 @@
 {
   "token": "NzUwMDM3MjE2MTE3MzkxMzgw.X00slw.P2Z3zTT1d0jbwAPM3PA0u027hSw",
   "language": "NL",
-  "serverName": "test Server Naam",
+  "serverName": "a",
   "activity": "the bot developing itself :)",
   "activityType": "WATCHING",
   "colour": "#009999",
   "err_colour": "#E74C3C",
-  "suggestionChannelId": "830788726811656225",
+  "suggestion": {
+    "enabled": "True",
+    "channelId": "a"
+  },
+  "suggestion2": {
+    "enabled": "a",
+    "channelId": "a"
+  },
   "storage": {
     "type": "sqlite"
   },
@@ -17,5 +24,8 @@
     }
   },
   "debug": false,
-  "dev": false
+  "dev": false,
+  "serverName2": "a",
+  "undefined": "a",
+  "[object Object]": "a"
 }

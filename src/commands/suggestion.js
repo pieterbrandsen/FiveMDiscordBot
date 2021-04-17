@@ -13,7 +13,11 @@ module.exports = {
   description: commandText.description,
   permission: commandText.permission,
   options: commandText.options,
-  async execute(client, args, interaction, {member, config}) {
+  async execute(client, args, interaction, { member, config }) {
+    if (config.suggestion.enabled.toLowerCase() !== "true") {
+      return new MessageEmbed().setTitle(returnText.suggestionNotEnabled.title);
+    }
+    
     let suggestionChannel = null;
     try {
       suggestionChannel = await client.channels.fetch(config.suggestionChannelId);
@@ -28,16 +32,16 @@ module.exports = {
       const title = args[0].options[0].value;
       const message = args[0].options[1].value;
       const suggestionEmbed = new MessageEmbed()
-      .setTitle(title)
-      .setDescription(message)
-      .setFooter(returnText.suggestionFrom.replace("{{ displayName }}", member.displayName))
-      .setColor(config.colour);
+        .setTitle(title)
+        .setDescription(message)
+        .setFooter(returnText.suggestionFrom.replace('{{ displayName }}', member.displayName))
+        .setColor(config.colour);
 
-      var msg= await suggestionChannel.send(suggestionEmbed)
-      await msg.react("👍");
-      await msg.react("👎");
+      const msg = await suggestionChannel.send(suggestionEmbed);
+      await msg.react('👍');
+      await msg.react('👎');
 
-      const embed = new MessageEmbed().setTitle(returnText.createdSuggestion.title).setDescription(returnText.createdSuggestion.description.replace("{{ suggestionChannelId }}",config.suggestionChannelId))
+      const embed = new MessageEmbed().setTitle(returnText.createdSuggestion.title).setDescription(returnText.createdSuggestion.description.replace('{{ suggestionChannelId }}', config.suggestionChannelId));
       return embed;
     }
   },
