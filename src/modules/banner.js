@@ -1,6 +1,4 @@
-const link = require('terminal-link');
-const { version, homepage } = require('../../package.json');
-
+/* eslint-disable no-console */
 module.exports = (leeks) => {
   console.log(leeks.colours.cyan(`
 ########  ####  ######   ######   #######  ########  ########
