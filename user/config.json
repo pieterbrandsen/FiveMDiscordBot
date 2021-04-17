@@ -1,0 +1,24 @@
+{
+  "token": "NzUwMDM3MjE2MTE3MzkxMzgw.X00slw.P2Z3zTT1d0jbwAPM3PA0u027hSw",
+  "language": "NL",
+  "serverName": "a",
+  "activity": "the bot developing itself :)",
+  "activityType": "WATCHING",
+  "colour": "#009999",
+  "err_colour": "#E74C3C",
+  "suggestion": {
+    "enabled": "b",
+    "channelId": "c"
+  },
+  "storage": {
+    "type": "sqlite"
+  },
+  "logs": {
+    "files": {
+      "enabled": true,
+      "keep_for": 7
+    }
+  },
+  "debug": false,
+  "dev": false
+}
