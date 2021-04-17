@@ -97,11 +97,11 @@ module.exports = {
         }
       });
     } else if (args[0].name == commandText.subNames[2]) {
-      const configObjects = Object.entries(text.changeableConfigObjects).concat(text.changeableConfigValues);
+      const configObjects = Object.entries(text.changeableConfigValues);
       const overviewEmbed = new MessageEmbed().setTitle(text.configOverview.title).setDescription(text.configOverview.description);
       configObjects.forEach((element) => {
-        if (element.name) {
-          overviewEmbed.addField(element.name, config[element.name], true);
+        if (typeof element[1] === 'string') {
+          overviewEmbed.addField(element[0], config[element[0]], true);
         } else {
           for (let i = 0; i < element[1].length; i++) {
             overviewEmbed.addField(element[0], `${element[1][i].name}**=**${config[element[0]][element[1][i].name]}`, true);
