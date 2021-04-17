@@ -15,8 +15,6 @@ client.commands = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
 client.queue = new Map();
 
-const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const utils = require('./modules/utils');
 const leeks = require('leeks.js');
 
 require('./modules/banner')(leeks); // big coloured text thing
@@ -29,6 +27,22 @@ const log = new Logger({
   maxAge: config.logs.files.keep_for,
   debug: config.debug,
 });
+
+// const express = require('express');
+// // Set up the express app
+// const app = express();
+// // get all todos
+// app.get('/api/v1/todos', (req, res) => {
+//   res.status(200).send({
+//     success: 'true',
+//     message: 'todos retrieved successfully',
+//   })
+// });
+// const PORT = 5000;
+
+// app.listen(PORT, () => {
+//   console.log(`server running on port ${PORT}`)
+// });
 
 /**
  * storage
