@@ -4,6 +4,7 @@ const fs = require('fs');
 const log = new ChildLogger();
 
 const languageName = require('../../user/config').language;
+
 const languageConfig = require(`../../user/languages/${languageName}`);
 
 const eventObject = languageConfig.events.ready;

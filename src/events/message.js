@@ -4,6 +4,7 @@ const { ChildLogger } = require('leekslazylogger');
 const log = new ChildLogger();
 
 const languageName = require('../../user/config').language;
+
 const languageConfig = require(`../../user/languages/${languageName}`);
 
 const eventObject = languageConfig.events.message;

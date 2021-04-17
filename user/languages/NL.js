@@ -72,18 +72,12 @@ module.exports = {
         changeConfigValueOfObjectValueMessage: {
           title: "Pas het veld '{{ configValueName }}' van het object '{{ configObjectName }}' aan",
         },
-        // changeableConfigValues: {
-        //   'serverName': "Vul de naam in die je wilt gebruiken als 'server naam'.",
-        //   suggestion: [
-        //     { name: 'enabled', description: "Vul 'TRUE' in als je suggesties wil gebruiken. Alles wat je anders invult zal de suggesties onbruikbaar maken." },
-        //     { name: 'channelId', description: 'Als je de suggesties aangezet hebt kan je nu het id van het suggestie kanaal invoeren.' },
-        //   ],
-        // },
-        changeableConfigValues: [
-          { name: 'serverName', description: "Vul de naam in die je wilt gebruiken als 'server naam'." },
-        ],
-        changeableConfigObjects: {
-
+        changeableConfigValues: {
+          serverName: "Vul de naam in die je wilt gebruiken als 'server naam'.",
+          suggestion: [
+            { name: 'enabled', description: "Vul 'TRUE' in als je suggesties wil gebruiken. Alles wat je anders invult zal de suggesties onbruikbaar maken." },
+            { name: 'channelId', description: 'Als je de suggesties aangezet hebt kan je nu het id van het suggestie kanaal invoeren.' },
+          ],
         },
         configOverview: {
           title: 'Alle aanpasbaare config velden',

@@ -2,6 +2,7 @@ const fs = require('fs');
 const { MessageEmbed } = require('discord.js');
 
 const languageName = require('../../user/config').language;
+
 const languageConfig = require(`../../user/languages/${languageName}`);
 
 const commandObject = languageConfig.commands.config;
@@ -22,32 +23,32 @@ module.exports = {
     if (args[0].name == commandText.subNames[0]) {
       const messageFilter = (msg) => msg.author.id == member.user.id && msg.channel.id === channel.id;
       const collector = channel.createMessageCollector(messageFilter, { time: 10 * 60 * 1000 });
+      const configObjects = Object.entries(text.changeableConfigValues);
       let i = 0;
-      const configObjects = Object.entries(text.changeableConfigObjects);
-      let a = 0;
-      let b = 0;
-      await channel.send(changeConfigValueMessageEmbed(text.changeableConfigValues[i].name, text.changeableConfigValues[i].description, config.colour));
+      let y = 0;
+      if (typeof configObjects[0][1] === 'string') await channel.send(changeConfigValueMessageEmbed(configObjects[0][0], configObjects[0][1], config.colour));
+      else await channel.send(changeConfigValueOfObjectMessageEmbed(configObjects[0][0], configObjects[0][1][b].description, configObjects[0][1][b].name, config.colour));
 
       collector.on('collect', async (msg) => {
-        let configObject = configObjects[a];
-        if (i < text.changeableConfigValues.length) {
-          config[text.changeableConfigValues[i].name] = msg.content;
-          i++;
-          if (i < text.changeableConfigValues.length) {
-            msg.channel.send(changeConfigValueMessageEmbed(text.changeableConfigValues[i].name, text.changeableConfigValues[i].description, config.colour));
+        let configObject = configObjects[i];
+        if (i < configObjects.length) {
+          if (typeof configObject[1] === 'string') {
+            config[configObject[0]] = msg.content;
+            i++;
+            configObject = configObjects[i];
+            if (typeof configObject[1] === 'string') await channel.send(changeConfigValueMessageEmbed(configObject[0], configObject[1], config.colour));
+            else await channel.send(changeConfigValueOfObjectMessageEmbed(configObject[0], configObject[1][y].description, configObject[1][y].name, config.colour));
           } else {
-            msg.channel.send(changeConfigValueOfObjectMessageEmbed(configObject[1][b].name, configObject[1][b].description, configObject[0], config.colour));
+            config[configObject[0]][configObject[1][y].name] = msg.content;
+            y++;
+            if (configObject[1].length == y) {
+              i++;
+              y = 0;
+              configObject = configObjects[i];
+            }
+            if (configObject) msg.channel.send(changeConfigValueOfObjectMessageEmbed(configObject[1][y].name, configObject[1][y].description, configObject[0], config.colour));
+            else return collector.stop('MAX');
           }
-        } else {
-          config[configObject[0]][configObject[1][b].name] = msg.content;
-          b++;
-          if (a < configObjects.length && configObject[1].length == b) {
-            a++;
-            b = 0;
-            configObject = configObjects[a];
-          }
-          if (configObject) msg.channel.send(changeConfigValueOfObjectMessageEmbed(configObject[1][b].name, configObject[1][b].description, configObject[0], config.colour));
-          else return collector.stop('MAX');
         }
       });
 
@@ -65,16 +66,16 @@ module.exports = {
     } else if (args[0].name == commandText.subNames[1]) {
       const messageFilter = (msg) => msg.author.id == member.user.id && msg.channel.id === channel.id;
       const collector = channel.createMessageCollector(messageFilter, { time: 10 * 60 * 1000 });
-      const configObjects = Object.entries(text.changeableConfigObjects).concat(text.changeableConfigValues);
+      const configObjects = Object.entries(text.changeableConfigValues);
       const configObjectName = args[0].options[0].value.toLowerCase();
-      const configObject = configObjects.find((s) => (s.name ? s.name.toLowerCase() === configObjectName : s[0].toLowerCase() === configObjectName));
+      const configObject = configObjects.find((s) => (s[0].toLowerCase() === configObjectName));
       let b = 0;
-      if (configObject.name) await channel.send(changeConfigValueMessageEmbed(configObject.name, configObject.description, config.colour));
+      if (typeof configObject[1] === 'string') await channel.send(changeConfigValueMessageEmbed(configObject[0], configObject[1], config.colour));
       else await channel.send(changeConfigValueOfObjectMessageEmbed(configObject[0], configObject[1][b].description, configObject[1][b].name, config.colour));
 
       collector.on('collect', async (msg) => {
-        if (configObject.name) {
-          config[configObject.name] = msg.content;
+        if (typeof configObject[1] === 'string') {
+          config[configObject[0]] = msg.content;
           return collector.stop('MAX');
         }
 
