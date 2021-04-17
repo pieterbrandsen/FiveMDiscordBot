@@ -1,14 +1,15 @@
+const { APIMessage, MessageEmbed } = require('discord.js');
 const { ChildLogger } = require('leekslazylogger');
 
 const log = new ChildLogger();
 
-const languageConfig = require(`../../user/languages/${require('../../user/config').language}`);
+const languageName = require('../../user/config').language;
+const languageConfig = require(`../../user/languages/${languageName}`);
 
 const commandObject = languageConfig.modules.executeCommand;
 const { text } = commandObject;
 const { returnText } = commandObject;
 const { logText } = commandObject;
-const { APIMessage, MessageEmbed } = require('discord.js');
 
 module.exports = {
   async execute(interaction, client, { config }) {
@@ -40,7 +41,12 @@ module.exports = {
           .setDescription(returnText.noPermsEmbedDescription.replace('{{ commandName }}', command.name).replace('{{ commandPerms }}', command.permission));
       } else {
         message = await command.execute(client, args, interaction, { member, channel, config });
-        log.console(logText.userUsedCommand.replace('{{ username }}', interaction.member.user.username).replace('{{ commandName }}', commandName));
+        // * LOG ARGS VAN SLASH COMMAND
+        let argNames = args.reduce(function(acc, arg) {
+              acc += ` ${arg.name}`;
+          return acc;
+      }, '');
+        log.console(logText.userUsedCommand.replace('{{ username }}', interaction.member.user.username).replace('{{ commandName }}', commandName).replace("{{ commandArgs }}",argNames));
       }
 
       client.api.interactions(interaction.id, interaction.token).callback.post({

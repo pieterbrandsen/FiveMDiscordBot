@@ -37,12 +37,30 @@ module.exports = {
     config: {
       commandText: {
         name: 'config',
-        subNames: ['initialiseer'],
+        subNames: ['initialiseer', 'configureer', 'overzicht'],
         description: 'Pas de de config aan voor de server',
         permission: 'ADMINISTRATOR',
         options: [{
           name: 'initialiseer',
-          description: 'Maak de config opnieuw aan',
+          description: 'Maak de config compleet opnieuw aan',
+          type: 1, // 1 is type SUB_COMMAND
+        },
+        {
+          name: 'configureer',
+          description: 'Stel een onderdeel van de config compleet opnieuw aan op basis van je input',
+          type: 1, // 1 is type SUB_COMMAND
+          options: [
+            {
+              name: 'onderdeel',
+              description: 'Naam van onderdeel in de config',
+              type: 3,
+              required: true,
+            },
+          ],
+        },
+        {
+          name: 'overzicht',
+          description: 'Bekijk alle aanpasbaare config velden',
           type: 1, // 1 is type SUB_COMMAND
         },
         ],
@@ -54,19 +72,30 @@ module.exports = {
         changeConfigValueOfObjectValueMessage: {
           title: "Pas het veld '{{ configValueName }}' van het object '{{ configObjectName }}' aan",
         },
+        // changeableConfigValues: {
+        //   'serverName': "Vul de naam in die je wilt gebruiken als 'server naam'.",
+        //   suggestion: [
+        //     { name: 'enabled', description: "Vul 'TRUE' in als je suggesties wil gebruiken. Alles wat je anders invult zal de suggesties onbruikbaar maken." },
+        //     { name: 'channelId', description: 'Als je de suggesties aangezet hebt kan je nu het id van het suggestie kanaal invoeren.' },
+        //   ],
+        // },
         changeableConfigValues: [
-          {name:'serverName', description: "Vul de naam in die je wilt gebruiken als 'server naam'."},
+          { name: 'serverName', description: "Vul de naam in die je wilt gebruiken als 'server naam'." },
         ],
         changeableConfigObjects: {
-          suggestion: [
-            {name:'enabled', description: "Vul 'TRUE' in als je suggesties wil gebruiken. Alles wat je anders invult zal de suggesties onbruikbaar maken."},
-            {name:'channelId', description: 'Als je de suggesties aangezet hebt kan je nu het id van het suggestie kanaal invoeren.'},
-          ],
+
+        },
+        configOverview: {
+          title: 'Alle aanpasbaare config velden',
+          description: `Om een veld aan te passen kan je /config **initialiseer** of /config **onderdeel** gebruiken.
+          
+          Onderdelen:
+          `,
         },
       },
       returnText: {
         startedUpdatingConfig: {
-          title: 'Stel alle config velden in',
+          title: 'Pas de config aan',
         },
         messageCollectorEnd: {
           title: 'Succesvol de config aangepast',
@@ -112,7 +141,7 @@ module.exports = {
       },
       returnText: {
         suggestionNotEnabled: {
-          title: "De suggesties staan uit, contacteer staff als je denkt dat dit niet correct is!",
+          title: 'De suggesties staan uit, contacteer staff als je denkt dat dit niet correct is!',
         },
         suggestionFrom: 'Suggestie van {{ displayName }}',
         createdSuggestion: {
@@ -138,11 +167,11 @@ module.exports = {
       },
       returnText: {
         noPermsEmbedTitle: ':x: Geen permissie',
-        noPermsEmbedDescription: '**Je hebt geen permissie om \`{{ commandName }}\` te gebruiken** (bennodigd \`{{ commandPerms }}\`).',
+        noPermsEmbedDescription: '**Je hebt geen permissie om `{{ commandName }}` te gebruiken** (bennodigd `{{ commandPerms }}`).',
       },
       logText: {
         userHasNoCommandPerms: "{{ username }} tried to use the '{{ commandName }}' command without permission",
-        userUsedCommand: "{{ username }} used the '{{ commandName }}' command",
+        userUsedCommand: "{{ username }} used the '{{ commandName }}{{ commandArgs }}' command",
         errorWhileExecutingCommand: "An error occurred whilst executing the '{{ commandName }}' command",
       },
     },
@@ -176,8 +205,8 @@ module.exports = {
       logText: {
         succesfullyAuthenticated: 'Authenticated as {{ botTag }}',
         updatedPressence: 'Updated presence: {{ activityType }} {{ activityText }}',
-        administratorGranted: "\'ADMINISTRATOR\' permission has been granted",
-        administratorMissing: "Bot does not have \'ADMINISTRATOR\' permission",
+        administratorGranted: "'ADMINISTRATOR' permission has been granted",
+        administratorMissing: "Bot does not have 'ADMINISTRATOR' permission",
       },
     },
   },

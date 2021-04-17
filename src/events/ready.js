@@ -3,9 +3,8 @@ const fs = require('fs');
 
 const log = new ChildLogger();
 
-const config = require('../../user/config');
-
-const languageConfig = require(`../../user/languages/${config.language}`);
+const languageName = require('../../user/config').language;
+const languageConfig = require(`../../user/languages/${languageName}`);
 
 const eventObject = languageConfig.events.ready;
 const { text } = eventObject;

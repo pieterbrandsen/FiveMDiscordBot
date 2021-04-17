@@ -1,11 +1,9 @@
 const fs = require('fs');
-const path = require('path');
-const fetchTimeout = require('fetch-timeout');
+const config = require('../user/config');
 
 require('dotenv').config({ path: 'user/.env' });
 
 const Discord = require('discord.js');
-const config = require('../user/config.json');
 
 const client = new Discord.Client();
 // const client = new Discord.Client({

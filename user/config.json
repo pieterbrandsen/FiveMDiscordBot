@@ -1,18 +1,14 @@
 {
   "token": "NzUwMDM3MjE2MTE3MzkxMzgw.X00slw.P2Z3zTT1d0jbwAPM3PA0u027hSw",
   "language": "NL",
-  "serverName": "a",
+  "serverName": "test",
   "activity": "the bot developing itself :)",
   "activityType": "WATCHING",
   "colour": "#009999",
   "err_colour": "#E74C3C",
   "suggestion": {
-    "enabled": "True",
-    "channelId": "a"
-  },
-  "suggestion2": {
-    "enabled": "a",
-    "channelId": "a"
+    "enabled": "mooi",
+    "channelId": "mooier"
   },
   "storage": {
     "type": "sqlite"
@@ -24,8 +20,5 @@
     }
   },
   "debug": false,
-  "dev": false,
-  "serverName2": "a",
-  "undefined": "a",
-  "[object Object]": "a"
+  "dev": false
 }

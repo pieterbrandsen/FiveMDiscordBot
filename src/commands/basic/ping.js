@@ -1,6 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 
-const languageConfig = require(`../../../user/languages/${require('../../../user/config').language}`);
+const languageName = require('../../../user/config').language;
+const languageConfig = require(`../../../user/languages/${languageName}`);
 
 const commandObject = languageConfig.commands.basic.ping;
 const { commandText } = commandObject;

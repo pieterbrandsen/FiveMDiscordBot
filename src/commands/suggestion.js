@@ -1,6 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 
-const languageConfig = require(`../../user/languages/${require('../../user/config').language}`);
+const languageName = require('../../user/config').language;
+const languageConfig = require(`../../user/languages/${languageName}`);
 
 const commandObject = languageConfig.commands.suggestion;
 const { commandText } = commandObject;
@@ -14,10 +15,10 @@ module.exports = {
   permission: commandText.permission,
   options: commandText.options,
   async execute(client, args, interaction, { member, config }) {
-    if (config.suggestion.enabled.toLowerCase() !== "true") {
+    if (config.suggestion.enabled.toLowerCase() !== 'true') {
       return new MessageEmbed().setTitle(returnText.suggestionNotEnabled.title);
     }
-    
+
     let suggestionChannel = null;
     try {
       suggestionChannel = await client.channels.fetch(config.suggestionChannelId);
