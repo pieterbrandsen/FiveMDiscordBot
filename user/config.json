@@ -1,5 +1,5 @@
 {
-  "token": "NzUwMDM3MjE2MTE3MzkxMzgw.X00slw.P2Z3zTT1d0jbwAPM3PA0u027hSw",
+  "apiPort": "5000",
   "language": "NL",
   "serverName": "a",
   "activity": "the bot developing itself :)",
@@ -9,6 +9,10 @@
   "suggestion": {
     "enabled": "b",
     "channelId": "c"
+  },
+  "verifySystem": {
+    "unverifiedRoleId": "830788726111338530",
+    "verifiedRoleId": "830788726111338528"
   },
   "storage": {
     "type": "sqlite"

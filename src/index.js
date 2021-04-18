@@ -15,8 +15,6 @@ client.commands = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
 client.queue = new Map();
 
-const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const utils = require('./modules/utils');
 const leeks = require('leeks.js');
 
 require('./modules/banner')(leeks); // big coloured text thing
@@ -42,6 +40,8 @@ sequelize = new Sequelize({
   storage: 'user/storage.db',
   logging: log.debug,
 });
+
+require("./modules/api")(config, client);
 
 class Setting extends Model {}
 Setting.init({
@@ -79,4 +79,4 @@ process.on('unhandledRejection', (error) => {
   log.error(error);
 });
 
-client.login(config.token);
+client.login(process.env.discordToken);
