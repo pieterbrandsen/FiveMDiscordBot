@@ -1,6 +1,9 @@
-/* eslint-disable no-console */
+const { ChildLogger } = require('leekslazylogger');
+
+const log = new ChildLogger();
+
 module.exports = (leeks) => {
-  console.log(leeks.colours.cyan(`
+  log.console(leeks.colours.cyan(`
 ########  ####  ######   ######   #######  ########  ########
 ##     ##  ##  ##    ## ##    ## ##     ## ##     ## ##     ##
 ##     ##  ##  ##       ##       ##     ## ##     ## ##     ##
@@ -9,7 +12,7 @@ module.exports = (leeks) => {
 ##     ##  ##  ##    ## ##    ## ##     ## ##    ##  ##     ##
 ########  ####  ######   ######   #######  ##     ## ########
 `));
-  console.log('\n\n');
+  log.console('\n\n');
 };
 
 /*
