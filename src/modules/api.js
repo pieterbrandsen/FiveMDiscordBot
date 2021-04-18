@@ -10,7 +10,7 @@ module.exports = (config,client) => {
   const app = express();
   app.post('/api/v1/verifyUser', async (req, res) => {
     try {
-      log.console(`Api request on '/api/v1/verifyUser' with query args: ${JSON.stringify(req.query)}`);    
+      log.console(`> Api request on '/api/v1/verifyUser' with query args: ${JSON.stringify(req.query)}`);    
       if (req.query.acces_key !== process.env.apiAccessKey) return res.status(401).send({
         success: 'false',
         message: 'Your not allowed access Api with your ApiAccessKey',
