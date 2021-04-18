@@ -28,22 +28,6 @@ const log = new Logger({
   debug: config.debug,
 });
 
-// const express = require('express');
-// // Set up the express app
-// const app = express();
-// // get all todos
-// app.get('/api/v1/todos', (req, res) => {
-//   res.status(200).send({
-//     success: 'true',
-//     message: 'todos retrieved successfully',
-//   })
-// });
-// const PORT = 5000;
-
-// app.listen(PORT, () => {
-//   console.log(`server running on port ${PORT}`)
-// });
-
 /**
  * storage
  */
@@ -56,6 +40,8 @@ sequelize = new Sequelize({
   storage: 'user/storage.db',
   logging: log.debug,
 });
+
+require("./modules/api")(config, client);
 
 class Setting extends Model {}
 Setting.init({
@@ -93,4 +79,4 @@ process.on('unhandledRejection', (error) => {
   log.error(error);
 });
 
-client.login(config.token);
+client.login(process.env.discordToken);
