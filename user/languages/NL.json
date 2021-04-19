@@ -80,6 +80,16 @@
               "name":"channelId",
               "description":"Als je de suggesties aangezet hebt kan je nu het id van het suggestie kanaal invoeren."
             }
+          ],
+          "verifySystem": [
+            {
+              "name": "unverifiedRoleId",
+              "description":"De rol die verwijderd word als een gebruiker geverifeerd wordt."
+            },
+            {
+              "name": "verifiedRoleId",
+              "description":"De rol die toegevoegd word als een gebruiker geverifeerd wordt."
+            }
           ]
         },
         "configOverview":{

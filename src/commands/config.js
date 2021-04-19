@@ -18,7 +18,7 @@ module.exports = {
   async execute(client, args, interaction, { config, member, channel }) {
     const localConfig = config;
     if (args[0].name === commandText.subNames[0]) {
-      const userId = member.user.i;
+      const userId = member.user.id;
       const messageFilter = (msg) => msg.author.id === userId && msg.channel.id === channel.id;
       const collector = channel.createMessageCollector(messageFilter, { time: 10 * 60 * 1000 });
       const configObjects = Object.entries(text.changeableConfigValues);
@@ -69,8 +69,6 @@ module.exports = {
             } else return collector.stop('MAX');
           }
         }
-
-        return undefined;
       });
 
       collector.on('end', (collected, reason) => {
@@ -94,7 +92,7 @@ module.exports = {
         return undefined;
       });
     } else if (args[0].name === commandText.subNames[1]) {
-      const userId = member.user.i;
+      const userId = member.user.id;
       const messageFilter = (msg) => msg.author.id === userId && msg.channel.id === channel.id;
       const collector = channel.createMessageCollector(messageFilter, { time: 10 * 60 * 1000 });
       const configObjects = Object.entries(text.changeableConfigValues);
@@ -133,8 +131,6 @@ module.exports = {
             configObject[0],
             config.colour));
         } else return collector.stop('MAX');
-
-        return undefined;
       });
 
       collector.on('end', (collected, reason) => {

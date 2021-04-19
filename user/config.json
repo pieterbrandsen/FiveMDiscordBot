@@ -1,17 +1,17 @@
 {
   "apiPort": "5000",
   "language": "NL",
-  "serverName": "a",
+  "serverName": "afffa",
   "activity": "the bot developing itself :)",
   "activityType": "WATCHING",
   "colour": "#009999",
   "err_colour": "#E74C3C",
   "suggestion": {
-    "enabled": "b",
-    "channelId": "c"
+    "enabled": "abc",
+    "channelId": "abcsd"
   },
   "verifySystem": {
-    "unverifiedRoleId": "830788726111338530",
+    "unverifiedRoleId": "b",
     "verifiedRoleId": "830788726111338528"
   },
   "storage": {
