@@ -40,7 +40,19 @@ module.exports = (config, client) => {
       }
 
       const unverifiedRole = await guild.roles.fetch(config.verifySystem.unverifiedRoleId);
+      if (unverifiedRole === null) {
+        return res.status(404).send({
+          success: 'false',
+          message: "The was no role found with your 'unverifiedRoleId' from your config, please try again",
+        });
+      }
       const verifiedRole = await guild.roles.fetch(config.verifySystem.verifiedRoleId);
+      if (verifiedRole === null) {
+        return res.status(404).send({
+          success: 'false',
+          message: "The was no role found with your 'verifiedRoleId' from your config, please try again",
+        });
+      }
       const member = guild.members.cache.get(req.query.user_id);
       if (member === undefined) {
         return res.status(404).send({

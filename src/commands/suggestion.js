@@ -11,16 +11,15 @@ module.exports = {
   permission: commandText.permission,
   options: commandText.options,
   async execute(client, args, interaction, { member, config }) {
-    if (config.suggestion.enabled.toLowerCase() !== 'true') {
-      return new MessageEmbed().setTitle(returnText.suggestionNotEnabled.title);
-    }
+    if (config.suggestion.enabled.toLowerCase() !== 'true') return new MessageEmbed().setTitle(returnText.suggestionNotEnabled.title);
 
     const suggestionChannel = client.channels.cache.get(config.suggestionChannelId);
 
     if (suggestionChannel === null) {
       return new MessageEmbed()
         .setTitle(returnText.noSuggestionChannelEmbed.title)
-        .setDescription(returnText.noSuggestionChannelEmbed.description);
+        .setDescription(returnText.noSuggestionChannelEmbed.description)
+        .setColor(config.colour);
     }
 
     if (args[0].name === commandText.subNames[0]) {

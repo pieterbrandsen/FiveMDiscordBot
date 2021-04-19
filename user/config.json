@@ -14,6 +14,12 @@
     "unverifiedRoleId": "b",
     "verifiedRoleId": "830788726111338528"
   },
+  "welcomeSystem": {
+    "enabled": "TRUE",
+    "messageType": "photo",
+    "channelId": "830788726640607243",
+    "message": "1a\n2a\n3a\n4a"
+  },
   "storage": {
     "type": "sqlite"
   },
