@@ -1,14 +1,9 @@
 const { MessageEmbed } = require('discord.js');
 
-const languageName = require('../../user/config').language;
+const commandObject = require('../modules/languageConfig').get('commands', 'suggestion');
 
-const languageConfig = require(`../../user/languages/${languageName}`);
-
-const commandObject = languageConfig.commands.suggestion;
 const { commandText } = commandObject;
-const { text } = commandObject;
 const { returnText } = commandObject;
-const { logText } = commandObject;
 
 module.exports = {
   name: commandText.name,
@@ -20,17 +15,15 @@ module.exports = {
       return new MessageEmbed().setTitle(returnText.suggestionNotEnabled.title);
     }
 
-    let suggestionChannel = null;
-    try {
-      suggestionChannel = await client.channels.fetch(config.suggestionChannelId);
-    } catch (error) {
-    }
+    const suggestionChannel = client.channels.cache.get(config.suggestionChannelId);
 
     if (suggestionChannel === null) {
-      return new MessageEmbed().setTitle(returnText.noSuggestionChannelEmbed.title).setDescription(returnText.noSuggestionChannelEmbed.description);
+      return new MessageEmbed()
+        .setTitle(returnText.noSuggestionChannelEmbed.title)
+        .setDescription(returnText.noSuggestionChannelEmbed.description);
     }
 
-    if (args[0].name == commandText.subNames[0]) {
+    if (args[0].name === commandText.subNames[0]) {
       const title = args[0].options[0].value;
       const message = args[0].options[1].value;
       const suggestionEmbed = new MessageEmbed()
@@ -46,5 +39,7 @@ module.exports = {
       const embed = new MessageEmbed().setTitle(returnText.createdSuggestion.title).setDescription(returnText.createdSuggestion.description.replace('{{ suggestionChannelId }}', config.suggestionChannelId));
       return embed;
     }
+
+    return undefined;
   },
 };

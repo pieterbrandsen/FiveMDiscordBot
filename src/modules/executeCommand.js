@@ -3,12 +3,8 @@ const { ChildLogger } = require('leekslazylogger');
 
 const log = new ChildLogger();
 
-const languageName = require('../../user/config').language;
+const commandObject = require('./languageConfig').get('modules', 'executeCommand');
 
-const languageConfig = require(`../../user/languages/${languageName}`);
-
-const commandObject = languageConfig.modules.executeCommand;
-const { text } = commandObject;
 const { returnText } = commandObject;
 const { logText } = commandObject;
 
@@ -23,7 +19,7 @@ module.exports = {
     }
 
     const commandName = interaction.data.name;
-    const args = interaction.data.options;
+    const args = interaction.data.options || [];
 
     const command = client.commands.get(`${commandName}.`) || client.commands.get(commandName);
 
@@ -44,6 +40,7 @@ module.exports = {
         message = await command.execute(client, args, interaction, { member, channel, config });
         // * LOG ARGS VAN SLASH COMMAND
         const argNames = args.reduce((acc, arg) => {
+          // eslint-disable-next-line no-param-reassign
           acc += ` ${arg.name}`;
           return acc;
         }, '');

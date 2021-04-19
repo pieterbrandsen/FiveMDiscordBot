@@ -3,7 +3,7 @@ const { ChildLogger } = require('leekslazylogger');
 const log = new ChildLogger();
 
 module.exports = {
-  event: 'warn',
+  name: 'warn',
   execute(client, [e]) {
     log.warn(e);
   },

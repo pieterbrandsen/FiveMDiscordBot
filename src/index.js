@@ -1,25 +1,20 @@
+const Discord = require('discord.js');
+const Logger = require('leekslazylogger');
+const { Sequelize, Model, DataTypes } = require('sequelize');
 const fs = require('fs');
 const config = require('../user/config');
 
+require('./modules/languageConfig').set(config.language);
+require('./modules/banner');
 require('dotenv').config({ path: 'user/.env' });
 
-const Discord = require('discord.js');
+const executeCommand = require('./modules/executeCommand');
 
 const client = new Discord.Client();
-// const client = new Discord.Client({
-// 	autoReconnect: true,
-// 	partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
-// });
 client.events = new Discord.Collection();
 client.commands = new Discord.Collection();
-client.cooldowns = new Discord.Collection();
 client.queue = new Map();
-
-const leeks = require('leeks.js');
-
-require('./modules/banner')(leeks); // big coloured text thing
-
-const Logger = require('leekslazylogger');
+require('./modules/api')(config, client);
 
 const log = new Logger({
   name: config.name,
@@ -31,17 +26,12 @@ const log = new Logger({
 /**
  * storage
  */
-const { Sequelize, Model, DataTypes } = require('sequelize');
-
-let sequelize;
 log.info('Using SQLite storage');
-sequelize = new Sequelize({
+const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: 'user/storage.db',
   logging: log.debug,
 });
-
-require("./modules/api")(config, client);
 
 class Setting extends Model {}
 Setting.init({
@@ -57,20 +47,20 @@ Setting.sync();
 /**
  * event loader
  */
-const events = fs.readdirSync('src/events').filter((file) => file.endsWith('.js'));
-for (const file of events) {
+fs.readdirSync('src/events').filter((file) => file.endsWith('.js')).forEach((file) => {
+  // eslint-disable-next-line
   const event = require(`./events/${file}`);
-  client.events.set(event.event, event);
-  client.on(event.event, (e1, e2) => client.events.get(event.event).execute(client, [e1, e2], {
+  client.events.set(event.name, event);
+  client.on(event.name, (e1, e2) => client.events.get(event.name).execute(client, [e1, e2], {
     config, Setting,
   }));
-  log.console(log.format(`> Loaded &7${event.event}&f event`));
-}
+  log.console(log.format(`> Loaded &7${event.name}&f event`));
+});
 
-log.info(`Loaded ${events.length} events`);
+log.info(`Loaded ${client.events.size} events`);
 
 client.ws.on('INTERACTION_CREATE', async (interaction) => {
-  require('./modules/executeCommand').execute(interaction, client, { config });
+  executeCommand.execute(interaction, client, { config });
 });
 
 process.on('unhandledRejection', (error) => {
