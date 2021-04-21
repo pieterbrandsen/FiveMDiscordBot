@@ -7,18 +7,18 @@
   "colour": "#009999",
   "err_colour": "#E74C3C",
   "suggestion": {
-    "enabled": "abc",
-    "channelId": "abcsd"
+    "enabled": "true",
+    "channelId": "830788726811656230"
   },
   "verifySystem": {
     "unverifiedRoleId": "b",
     "verifiedRoleId": "830788726111338528"
   },
   "welcomeSystem": {
-    "enabled": "TRUE",
+    "enabled": "true",
     "messageType": "photo",
-    "channelId": "830788726640607243",
-    "message": "1a\n2a\n3a\n4a"
+    "channelId": "830788726640607242",
+    "message": "oke\noke2"
   },
   "storage": {
     "type": "sqlite"
