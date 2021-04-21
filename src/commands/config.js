@@ -37,6 +37,7 @@ module.exports = {
         );
       }
 
+      // eslint-disable-next-line consistent-return
       collector.on('collect', async (msg) => {
         let configObject = configObjects[i];
         if (i < configObjects.length) {
@@ -98,13 +99,13 @@ module.exports = {
       const configObjects = Object.entries(text.changeableConfigValues);
       const configObjectName = args[0].options[0].value.toLowerCase();
       const configObject = configObjects.find((s) => (s[0].toLowerCase() === configObjectName));
-      
+
       if (configObject === undefined) {
         return new MessageEmbed()
-        .setTitle(returnText.objectNotFound.title)
-        .setDescription(returnText.objectNotFound.description.replace("{{ name }}", configObjectName))
+          .setTitle(returnText.objectNotFound.title)
+          .setDescription(returnText.objectNotFound.description.replace('{{ name }}', configObjectName));
       }
-      
+
       let b = 0;
       if (typeof configObject[1] === 'string') {
         await channel.send(changeConfigValueMessageEmbed(configObject[0],
@@ -117,6 +118,7 @@ module.exports = {
           config.colour));
       }
 
+      // eslint-disable-next-line consistent-return
       collector.on('collect', async (msg) => {
         if (typeof configObject[1] === 'string') {
           localConfig[configObject[0]] = msg.content;

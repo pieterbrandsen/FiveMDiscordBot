@@ -216,6 +216,19 @@
     },
     "guildMemberAdd": {
       "text":{
+        "customMessages": [
+          "{{ username }}, we waren al op je aan het wachten", 
+          "{{ username }}, we hopen dat je een fijne tijd gaat hebben", 
+          "Normaal vraag ik hoge tol maar vandaag doe ik dat niet!", 
+          "{{ username }} vloog de stad in", 
+          "{{ username }} reed de stad binnen",
+          "{{ username }} imigreerde de stad in",
+          "Kan jij mij de koffie even brengen {{ username }}?",
+          "Buren worden {{ username }}?",
+          "Goed je te zien {{ username }}",
+          "Iedereen verwelkom {{ username }}",
+          "Welkom {{ username }}",
+          "Welkom {{ username }}, je hebt toch wel pizza meegenomen??"],
         "userJoinedGuild": {
           "title": "Welkom {{ username }} op {{ serverName }}!"
         } 

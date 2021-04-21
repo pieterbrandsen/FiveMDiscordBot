@@ -7,7 +7,7 @@ const { logText } = eventObject;
 
 module.exports = {
   name: 'guildMemberRemove',
-  execute(client, [member], {config}) {
-    log.info(logText.userLeftGuild.replace("{{ userTag }}", member.user.tag));
+  execute(client, [member]) {
+    log.info(logText.userLeftGuild.replace('{{ userTag }}', member.user.tag));
   },
 };
