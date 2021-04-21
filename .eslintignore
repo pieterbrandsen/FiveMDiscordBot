@@ -5,5 +5,7 @@ logs
 # File types
 **/*.json
 **/*.yml
-**/*.db
 **/*.md
+**/*.jpg
+**/*.png
+**/*.db

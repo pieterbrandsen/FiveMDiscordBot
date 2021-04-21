@@ -74,11 +74,29 @@
           "suggestion":[
             {
               "name":"enabled",
-              "description":"Vul 'TRUE' in als je suggesties wil gebruiken. Alles wat je anders invult zal de suggesties onbruikbaar maken."
+              "description":"Vul 'TRUE' in als je suggesties wil gebruiken. Alles wat je anders invult zullen de suggesties onbruikbaar maken."
             },
             {
               "name":"channelId",
               "description":"Als je de suggesties aangezet hebt kan je nu het id van het suggestie kanaal invoeren."
+            }
+          ],
+          "welcomeSystem": [
+            {
+              "name": "enabled",
+              "description":"Vul 'TRUE' in als je een welkom berichten wil gebruiken. Alles wat je anders invult zullen welkoms berichten onbruikbaar maken."
+            },
+            {
+              "name": "messageType",
+              "description":"Kies uit **text** of **photo** als bericht als een nieuw lid de server betreed"
+            },
+            {
+              "name":"channelId",
+              "description":"Vul hier het id in van het kanaal dat je wilt gebruiken voor welkoms berichten in te verzenden."
+            },
+            {
+              "name": "message",
+              "description":"Als je een tekst bericht gekozen hebt kan je nu invoeren wat je als beschrijving wilt. Met SHIFT+ENTER kan je een nieuwe regel invoeren."
             }
           ],
           "verifySystem": [
@@ -186,13 +204,6 @@
         "dmMessage":"Received a DM from {{ username }}: {{ cleanMessage }}"
       }
     },
-    "rateLimit":{
-      "text":{},
-      "returnText":{},
-      "logText":{
-        "rateLimited":"Rate-limited! (Enable debug mode in config for details)"
-      }
-    },
     "ready":{
       "text":{},
       "returnText":{},
@@ -201,6 +212,37 @@
         "updatedPressence":"Updated presence: {{ activityType }} {{ activityText }}",
         "administratorGranted":"'ADMINISTRATOR' permission has been granted",
         "administratorMissing":"Bot does not have 'ADMINISTRATOR' permission"
+      }
+    },
+    "guildMemberAdd": {
+      "text":{
+        "customMessages": [
+          "{{ username }}, we waren al op je aan het wachten", 
+          "{{ username }}, we hopen dat je een fijne tijd gaat hebben", 
+          "Normaal vraag ik hoge tol maar vandaag doe ik dat niet!", 
+          "{{ username }} vloog de stad in", 
+          "{{ username }} reed de stad binnen",
+          "{{ username }} imigreerde de stad in",
+          "Kan jij mij de koffie even brengen {{ username }}?",
+          "Buren worden {{ username }}?",
+          "Goed je te zien {{ username }}",
+          "Iedereen verwelkom {{ username }}",
+          "Welkom {{ username }}",
+          "Welkom {{ username }}, je hebt toch wel pizza meegenomen??"],
+        "userJoinedGuild": {
+          "title": "Welkom {{ username }} op {{ serverName }}!"
+        } 
+      },
+      "returnText":{},
+      "logText":{
+        "userJoinedGuild": "{{ userTag }} has joined the guild."
+      }
+    },
+    "guildMemberRemove": {
+      "text":{},
+      "returnText":{},
+      "logText":{
+        "userLeftGuild": "{{ userTag }} has left the guild"
       }
     }
   }

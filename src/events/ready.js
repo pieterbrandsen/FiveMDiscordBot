@@ -39,8 +39,8 @@ module.exports = {
     /**
 * command loader
 */
-    readdirSync('src/commands').filter((file) => file.endsWith('.js')).forEach((file) => {
-      registerCommand(client, client.guilds.cache, `${file}`);
+readdirSync('src/commands').filter((file) => file.endsWith('.js')).forEach((file) => {
+  registerCommand(client, client.guilds.cache, `${file}`);
     });
 
     readdirSync('src/commands').forEach((dir) => {
