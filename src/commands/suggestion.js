@@ -13,7 +13,7 @@ module.exports = {
   async execute(client, args, interaction, { member, config }) {
     if (config.suggestion.enabled.toLowerCase() !== 'true') return new MessageEmbed().setTitle(returnText.suggestionNotEnabled.title);
 
-    const suggestionChannel = client.channels.cache.get(config.suggestionChannelId);
+    const suggestionChannel = client.channels.cache.get(config.suggestion.channelId);
 
     if (suggestionChannel === null) {
       return new MessageEmbed()
