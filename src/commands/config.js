@@ -164,9 +164,12 @@ module.exports = {
         if (typeof element[1] === 'string') {
           overviewEmbed.addField(element[0], config[element[0]], true);
         } else {
+          let fieldText = "";
           for (let i = 0; i < element[1].length; i += 1) {
-            overviewEmbed.addField(element[0], `${element[1][i].name}**=**${config[element[0]][element[1][i].name]}`, true);
+            fieldText += `${element[1][i].name} **=** ${config[element[0]][element[1][i].name]} \n`
           }
+          overviewEmbed.addField(element[0], fieldText, false);
+
         }
       });
       return overviewEmbed;

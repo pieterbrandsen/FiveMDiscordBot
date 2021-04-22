@@ -120,7 +120,7 @@
         },
         "configOverview":{
           "title":"Alle aanpasbaare config velden",
-          "description":"Om een veld aan te passen kan je /config **initialiseer** of /config **onderdeel** gebruiken.\n          \n          Onderdelen:\n          "
+          "description":"Om een veld aan te passen kan je /config **initialiseer** of /config **onderdeel** gebruiken."
         }
       },
       "returnText":{
