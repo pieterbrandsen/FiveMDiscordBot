@@ -1,11 +1,9 @@
 {
   "apiPort": "5000",
   "language": "NL",
-  "serverName": "Panda Dev",
   "activity": "the bot developing itself :)",
   "activityType": "WATCHING",
-  "colour": "#009999",
-  "err_colour": "#E74C3C",
+  "errColor": "#E74C3C",
   "suggestion": {
     "enabled": "false",
     "channelId": "",
@@ -13,10 +11,10 @@
     "discussionChannelId": ""
   },
   "verifySystem": {
-    "unverifiedRoleId": "830788726111338530",
-    "verifiedRoleId": "830788726111338530"
+    "unverifiedRoleId": "",
+    "verifiedRoleId": ""
   },
-  "welcomeSystem": {
+  "welcomingSystem": {
     "enabled": "false",
     "messageType": "",
     "channelId": "",

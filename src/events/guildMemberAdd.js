@@ -35,17 +35,17 @@ module.exports = {
   name: 'guildMemberAdd',
   async execute(client, [member], { config }) {
     log.info(logText.userJoinedGuild.replace('{{ userTag }}', member.user.tag));
-    if (member.user.bot || config.welcomeSystem.enabled.toLowerCase() !== 'true') return;
+    if (member.user.bot || config.welcomingSystem.enabled.toLowerCase() !== 'true') return;
 
-    const welcomeChannel = await client.channels.fetch(config.welcomeSystem.channelId);
-    if (config.welcomeSystem.messageType.toLowerCase().includes('text')) {
-      const message = new MessageEmbed().setTitle(text.userJoinedGuild.title.replace('{{ username }}', member.user.username).replace('{{ serverName }}', config.serverName)).setDescription(config.welcomeSystem.message).setColor(config.colour);
+    const welcomeChannel = await client.channels.fetch(config.welcomingSystem.channelId);
+    if (config.welcomingSystem.messageType.toLowerCase().includes('text')) {
+      const message = new MessageEmbed().setTitle(text.userJoinedGuild.title.replace('{{ username }}', member.user.username).replace('{{ serverName }}', config.serverName)).setDescription(config.welcomingSystem.message).setColor(config.colour);
       await welcomeChannel.send(message);
-    } else if (config.welcomeSystem.messageType.toLowerCase().includes('photo')) {
+    } else if (config.welcomingSystem.messageType.toLowerCase().includes('photo')) {
       const canvas = Canvas.createCanvas(960, 540);
       const ctx = canvas.getContext('2d');
 
-      const fileLocation = "./user/images/welcomeSystem";
+      const fileLocation = "./user/images/welcomingSystem";
       const backgroundLocation = `${fileLocation}/backgrounds`; 
       const backgrounds = readdirSync(backgroundLocation).filter((file) => {return (file.endsWith('.png') || file.endsWith('.jpg'))});
       const background = await Canvas.loadImage(`${backgroundLocation}/${backgrounds[Math.floor(Math.random() * backgrounds.length)]}`);
