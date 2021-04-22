@@ -1,24 +1,26 @@
 {
   "apiPort": "5000",
   "language": "NL",
-  "serverName": "afffa",
+  "serverName": "Nijkerk Roleplay",
   "activity": "the bot developing itself :)",
   "activityType": "WATCHING",
   "colour": "#009999",
   "err_colour": "#E74C3C",
   "suggestion": {
     "enabled": "true",
-    "channelId": "830788726811656230"
+    "channelId": "833088190612111360",
+    "discussionChannelEnabled": "true",
+    "discussionChannelId": "834371432783544332"
   },
   "verifySystem": {
-    "unverifiedRoleId": "b",
-    "verifiedRoleId": "830788726111338528"
+    "unverifiedRoleId": "830759639783309322",
+    "verifiedRoleId": "830759639783309322"
   },
   "welcomeSystem": {
     "enabled": "true",
     "messageType": "photo",
-    "channelId": "830788726640607242",
-    "message": "oke\noke2"
+    "channelId": "821337244501409816",
+    "message": "geen bericht"
   },
   "storage": {
     "type": "sqlite"

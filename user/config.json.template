@@ -1,0 +1,36 @@
+{
+  "apiPort": "5000",
+  "language": "NL",
+  "serverName": "Panda Dev",
+  "activity": "the bot developing itself :)",
+  "activityType": "WATCHING",
+  "colour": "#009999",
+  "err_colour": "#E74C3C",
+  "suggestion": {
+    "enabled": "false",
+    "channelId": "",
+    "discussionChannelEnabled": "false",
+    "discussionChannelId": ""
+  },
+  "verifySystem": {
+    "unverifiedRoleId": "830788726111338530",
+    "verifiedRoleId": "830788726111338530"
+  },
+  "welcomeSystem": {
+    "enabled": "false",
+    "messageType": "",
+    "channelId": "",
+    "message": ""
+  },
+  "storage": {
+    "type": "sqlite"
+  },
+  "logs": {
+    "files": {
+      "enabled": true,
+      "keep_for": 14
+    }
+  },
+  "debug": false,
+  "dev": false
+}

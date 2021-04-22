@@ -79,6 +79,14 @@
             {
               "name":"channelId",
               "description":"Als je de suggesties aangezet hebt kan je nu het id van het suggestie kanaal invoeren."
+            },
+            {
+              "name":"discussionChannelEnabled",
+              "description":"Vul 'TRUE' in als je suggesties wil gebruiken **EN** je deze in het suggestie discussie kanaal wil zien."
+            },
+            {
+              "name":"discussionChannelId",
+              "description":"Als je ervoor gekozen hebt om het suggestie discussie te gebruiken kan je nu het id van het suggestie discussie kanaal invoeren."
             }
           ],
           "welcomeSystem": [
@@ -164,7 +172,13 @@
           }
         ]
       },
-      "text":{},
+      "text":{
+        "suggestionDiscussion": {
+          "title":"Kopie van suggestie",
+          "description":"Reageer op dit bericht als je een reactie wilt plaatsen op de suggestie!\n\n**Titel**: {{ messageTitle }}\n**Beschrijving**: {{ messageDescription }}",
+          "footer": "Suggestie gemaakt door {{ displayName }}"
+        }
+      },
       "returnText":{
         "suggestionNotEnabled":{
           "title":"De suggesties staan uit, contacteer staff als je denkt dat dit niet correct is!"
@@ -177,6 +191,10 @@
         "noSuggestionChannelEmbed":{
           "title":"Ik kon geen suggestie kanaal vinden",
           "description":"Het suggestie kanaal is niet juist ingesteld\n          \n          Contacteer de bot eigenaar voor support of vraag aan staff om hulp"
+        },
+        "noSuggestionDiscussionChannelEmbed":{
+          "title":"Ik kon geen suggestie discussie kanaal vinden",
+          "description":"Het suggestie discussie kanaal is niet juist ingesteld\n          \n          Contacteer de bot eigenaar voor support of vraag aan staff om hulp"
         }
       },
       "logText":{}
@@ -201,7 +219,8 @@
       "text":{},
       "returnText":{},
       "logText":{
-        "dmMessage":"Received a DM from {{ username }}: {{ cleanMessage }}"
+        "dmMessage":"Received a DM from {{ username }}: {{ cleanMessage }}",
+        "normalMessage":"{{ username }} has sent a message: {{ cleanMessage }}"
       }
     },
     "ready":{
