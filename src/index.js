@@ -1,10 +1,11 @@
 const Discord = require('discord.js');
 const Logger = require('leekslazylogger');
-const { Sequelize, Model, DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const fs = require('fs');
-const config = require('../user/config');
+const globalConfig = require('../user/config');
+const guildConfigHelper = require('./modules/guildConfig');
 
-require('./modules/languageConfig').set(config.language);
+require('./modules/languageConfig').set(globalConfig.language);
 require('./modules/banner');
 require('dotenv').config({ path: 'user/.env' });
 
@@ -14,35 +15,36 @@ const client = new Discord.Client();
 client.events = new Discord.Collection();
 client.commands = new Discord.Collection();
 client.queue = new Map();
-require('./modules/api')(config, client);
+require('./modules/api')(globalConfig, client);
 
 const log = new Logger({
-  name: config.name,
-  logToFile: config.logs.files.enabled,
-  maxAge: config.logs.files.keep_for,
-  debug: config.debug,
+  name: globalConfig.name,
+  logToFile: globalConfig.logs.files.enabled,
+  maxAge: globalConfig.logs.files.keep_for,
+  debug: globalConfig.debug,
 });
 
 /**
  * storage
  */
-log.info('Using SQLite storage');
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: 'user/storage.db',
-  logging: log.debug,
-});
-
-class Setting extends Model {}
-Setting.init({
-  key: DataTypes.STRING,
-  value: DataTypes.STRING,
-}, {
-  sequelize,
-  modelName: 'setting',
-});
-
-Setting.sync();
+let sequelize;
+if (globalConfig.storage.type === 'mssql') {
+  log.info('Connecting to MySQL database...');
+  sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
+    dialect: 'mssql',
+    host: process.env.DB_HOST,
+    logging: log.debug,
+    enableArithAbort: true,
+  });
+} else {
+  log.info('Using SQLite storage');
+  sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: 'user/storage.db',
+    logging: log.debug,
+  });
+}
+require('./modules/syncDatabase')(sequelize);
 
 /**
  * event loader
@@ -51,16 +53,22 @@ fs.readdirSync('src/events').filter((file) => file.endsWith('.js')).forEach((fil
   // eslint-disable-next-line
   const event = require(`./events/${file}`);
   client.events.set(event.name, event);
-  client.on(event.name, (e1, e2) => client.events.get(event.name).execute(client, [e1, e2], {
-    config, Setting,
-  }));
+  client.on(event.name, async (e1, e2) => {
+    const guildConfig = (e1 && e1.guild)
+      ? await guildConfigHelper.getGuildConfig(e1.guild.id, globalConfig)
+      : globalConfig;
+    client.events.get(event.name).execute(client, [e1, e2], {
+      guildConfig,
+    });
+  });
   log.console(log.format(`> Loaded &7${event.name}&f event`));
 });
 
 log.info(`Loaded ${client.events.size} events`);
 
 client.ws.on('INTERACTION_CREATE', async (interaction) => {
-  executeCommand.execute(interaction, client, { config });
+  const guildConfig = await guildConfigHelper.getGuildConfig(interaction.guild_id, globalConfig);
+  executeCommand.execute(interaction, client, { guildConfig });
 });
 
 process.on('unhandledRejection', (error) => {

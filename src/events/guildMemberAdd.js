@@ -33,21 +33,21 @@ const applyText = (canvas, font, sentence, maxLength) => {
 
 module.exports = {
   name: 'guildMemberAdd',
-  async execute(client, [member], { config }) {
+  async execute(client, [member], { guildConfig }) {
     log.info(logText.userJoinedGuild.replace('{{ userTag }}', member.user.tag));
-    if (member.user.bot || config.welcomeSystem.enabled.toLowerCase() !== 'true') return;
+    if (member.user.bot || guildConfig.welcomingSystem.enabled.toLowerCase() !== 'true') return;
 
-    const welcomeChannel = await client.channels.fetch(config.welcomeSystem.channelId);
-    if (config.welcomeSystem.messageType.toLowerCase().includes('text')) {
-      const message = new MessageEmbed().setTitle(text.userJoinedGuild.title.replace('{{ username }}', member.user.username).replace('{{ serverName }}', config.serverName)).setDescription(config.welcomeSystem.message).setColor(config.colour);
+    const welcomeChannel = await client.channels.fetch(guildConfig.welcomingSystem.channelId);
+    if (guildConfig.welcomingSystem.messageType.toLowerCase().includes('text')) {
+      const message = new MessageEmbed().setTitle(text.userJoinedGuild.title.replace('{{ username }}', member.user.username).replace('{{ serverName }}', guildConfig.serverName)).setDescription(guildConfig.welcomingSystem.message).setColor(guildConfig.embedColor);
       await welcomeChannel.send(message);
-    } else if (config.welcomeSystem.messageType.toLowerCase().includes('photo')) {
+    } else if (guildConfig.welcomingSystem.messageType.toLowerCase().includes('photo')) {
       const canvas = Canvas.createCanvas(960, 540);
       const ctx = canvas.getContext('2d');
 
-      const fileLocation = "./user/images/welcomeSystem";
-      const backgroundLocation = `${fileLocation}/backgrounds`; 
-      const backgrounds = readdirSync(backgroundLocation).filter((file) => {return (file.endsWith('.png') || file.endsWith('.jpg'))});
+      const fileLocation = './user/images/welcomingSystem';
+      const backgroundLocation = `${fileLocation}/backgrounds`;
+      const backgrounds = readdirSync(backgroundLocation).filter((file) => (file.endsWith('.png') || file.endsWith('.jpg')));
       const background = await Canvas.loadImage(`${backgroundLocation}/${backgrounds[Math.floor(Math.random() * backgrounds.length)]}`);
       ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
@@ -66,18 +66,26 @@ module.exports = {
         canvas.width * 0.42, canvas.height * 0.50, maxLength,
       );
 
-      const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: 'png', size: 256, dynamic: true }));
+      const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: 'gif', size: 256, dynamic: true }));
       ctx.beginPath();
-      ctx.arc(avatar.width / 2 + canvas.width * 0.12 + (256 - avatar.width) / 2, 
-      canvas.height / 2, 128, 0, Math.PI * 2, true);
+      ctx.arc(avatar.width / 2 + canvas.width * 0.12 + (256 - avatar.width) / 2,
+        canvas.height / 2, 128, 0, Math.PI * 2, true);
       ctx.closePath();
       ctx.clip();
 
-      ctx.drawImage(avatar, canvas.width * 0.12 + (256 - avatar.width) / 2, 
-      canvas.height / 2 - avatar.height / 2);
+      ctx.drawImage(avatar, canvas.width * 0.12 + (256 - avatar.width) / 2,
+        canvas.height / 2 - avatar.height / 2);
 
-      const attachment = new MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
+      const attachment = new MessageAttachment(canvas.toBuffer(), 'welcome-image.gif');
       await welcomeChannel.send(attachment);
     }
+
+    let channel;
+    try {
+      channel = member.dmChannel || await member.createDM();
+    } catch (e) {
+      channel = member.channel;
+        }
+    //  let a = await channel.send("a");
   },
 };

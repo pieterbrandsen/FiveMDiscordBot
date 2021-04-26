@@ -25,22 +25,22 @@ function registerCommand(client, guildArray, filePath) {
 
 module.exports = {
   name: 'ready',
-  execute(client, args, { config }) {
+  execute(client, args, { guildConfig }) {
     log.success(logText.succesfullyAuthenticated.replace('{{ botTag }}', client.user.tag));
 
     client.user.setPresence({
       activity: {
-        name: config.activity,
-        type: config.activityType,
+        name: guildConfig.activity,
+        type: guildConfig.activityType,
       },
     }).catch(log.error);
-    log.debug(logText.updatedPressence.replace('{{ activityType }}', config.activityType).replace('{{ activityText }}', config.activity));
+    log.debug(logText.updatedPressence.replace('{{ activityType }}', guildConfig.activityType).replace('{{ activityText }}', guildConfig.activity));
 
     /**
 * command loader
 */
-readdirSync('src/commands').filter((file) => file.endsWith('.js')).forEach((file) => {
-  registerCommand(client, client.guilds.cache, `${file}`);
+    readdirSync('src/commands').filter((file) => file.endsWith('.js')).forEach((file) => {
+      registerCommand(client, client.guilds.cache, `${file}`);
     });
 
     readdirSync('src/commands').forEach((dir) => {

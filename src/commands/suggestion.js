@@ -9,16 +9,16 @@ module.exports = {
   description: commandText.description,
   permission: commandText.permission,
   options: commandText.options,
-  async execute(client, args, interaction, { member, config,channel }) {
-    if (config.suggestion.enabled.toLowerCase() !== 'true') return new MessageEmbed().setTitle(returnText.suggestionNotEnabled.title);
+  async execute(client, args, interaction, { member, guildConfig, channel }) {
+    if (guildConfig.suggestionSystem.enabled.toLowerCase() !== 'true') return new MessageEmbed().setTitle(returnText.suggestionNotEnabled.title);
 
-    const suggestionChannel = client.channels.cache.get(config.suggestion.channelId);
+    const suggestionChannel = client.channels.cache.get(guildConfig.suggestionSystem.channelId);
 
     if (suggestionChannel === null) {
       return new MessageEmbed()
         .setTitle(returnText.noSuggestionChannelEmbed.title)
         .setDescription(returnText.noSuggestionChannelEmbed.description)
-        .setColor(config.colour);
+        .setColor(guildConfig.embedColor).setFooter(guildConfig.footerText);
     }
 
     if (args[0].name === commandText.subNames[0]) {
@@ -27,31 +27,33 @@ module.exports = {
       const suggestionEmbed = new MessageEmbed()
         .setTitle(title)
         .setDescription(message)
-        .setFooter(returnText.suggestionFrom.replace('{{ displayName }}', member.displayName))
-        .setColor(config.colour);
+        .setAuthor(returnText.suggestionFrom.replace('{{ displayName }}', member.displayName))
+        .setColor(guildConfig.embedColor).setFooter(guildConfig.footerText);
 
       const msg = await suggestionChannel.send(suggestionEmbed);
       await msg.react('👍');
       await msg.react('👎');
 
-      if (config.suggestion.discussionChannelEnabled) {
-        const suggestionDiscussionChannel = client.channels.cache.get(config.suggestion.discussionChannelId);
+      if (guildConfig.suggestionSystem.discussionChannelEnabled) {
+        const suggestionDiscussionChannel = client.channels.cache.get(
+          guildConfig.suggestionSystem.discussionChannelId,
+        );
         if (suggestionDiscussionChannel == null) {
           channel.send(new MessageEmbed()
-          .setTitle(returnText.noSuggestionDiscussionChannelEmbed.title)
-          .setDescription(returnText.noSuggestionDiscussionChannelEmbed.description)
-          .setColor(config.colour));
-        }
-        else {
+            .setTitle(returnText.noSuggestionDiscussionChannelEmbed.title)
+            .setDescription(returnText.noSuggestionDiscussionChannelEmbed.description)
+            .setColor(guildConfig.embedColor).setFooter(guildConfig.footerText));
+        } else {
           const discussionChannelMsg = new MessageEmbed()
-          .setTitle(text.suggestionDiscussion.title)
-          .setDescription(text.suggestionDiscussion.description.replace("{{ messageTitle }}",title).replace("{{ messageDescription }}",message))
-          .setFooter(returnText.suggestionFrom.replace('{{ displayName }}', member.displayName)).setColor(config.colour);
+            .setTitle(text.suggestionDiscussion.title)
+            .setDescription(text.suggestionDiscussion.description.replace('{{ messageTitle }}', title).replace('{{ messageDescription }}', message))
+            .setAuthor(returnText.suggestionFrom.replace('{{ displayName }}', member.displayName))
+            .setColor(guildConfig.embedColor).setFooter(guildConfig.footerText);
           await suggestionDiscussionChannel.send(discussionChannelMsg);
         }
       }
 
-      const embed = new MessageEmbed().setTitle(returnText.createdSuggestion.title).setDescription(returnText.createdSuggestion.description.replace('{{ suggestionChannelId }}', config.suggestion.channelId));
+      const embed = new MessageEmbed().setTitle(returnText.createdSuggestion.title).setDescription(returnText.createdSuggestion.description.replace('{{ suggestionChannelId }}', guildConfig.suggestionSystem.channelId)).setFooter(guildConfig.footerText);
       return embed;
     }
 
