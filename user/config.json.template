@@ -1,25 +1,10 @@
 {
   "apiPort": "5000",
   "language": "NL",
+  "footerText": "Copyright Panda",
   "activity": "the bot developing itself :)",
   "activityType": "WATCHING",
   "errColor": "#E74C3C",
-  "suggestion": {
-    "enabled": "false",
-    "channelId": "",
-    "discussionChannelEnabled": "false",
-    "discussionChannelId": ""
-  },
-  "verifySystem": {
-    "unverifiedRoleId": "",
-    "verifiedRoleId": ""
-  },
-  "welcomingSystem": {
-    "enabled": "false",
-    "messageType": "",
-    "channelId": "",
-    "message": ""
-  },
   "storage": {
     "type": "sqlite"
   },

@@ -9,11 +9,12 @@ module.exports = {
   name: commandText.name,
   description: commandText.description,
   permission: commandText.permission,
-  execute(client, args, interaction, { config }) {
+  execute(client, args, interaction, { guildConfig }) {
     const embed = new MessageEmbed()
       .setTitle('Pong!')
       .setDescription(returnText.currentPing.replace('{{ value }}', client.ws.ping))
-      .setColor(config.colour);
+      .setFooter(guildConfig.footerText)
+      .setColor(guildConfig.embedColor);
     return embed;
   },
 };

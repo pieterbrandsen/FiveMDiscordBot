@@ -7,5 +7,6 @@ logs
 **/*.yml
 **/*.md
 **/*.jpg
-**/*.png
 **/*.db
+**/*.template
+**/*.png
