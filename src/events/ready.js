@@ -1,18 +1,14 @@
 const { ChildLogger } = require('leekslazylogger');
-const fs = require('fs');
+const { readdirSync } = require('fs');
 
 const log = new ChildLogger();
 
-const languageName = require('../../user/config').language;
+const eventObject = require('../modules/languageConfig').get('events', 'ready');
 
-const languageConfig = require(`../../user/languages/${languageName}`);
-
-const eventObject = languageConfig.events.ready;
-const { text } = eventObject;
-const { returnText } = eventObject;
 const { logText } = eventObject;
 
 function registerCommand(client, guildArray, filePath) {
+  // eslint-disable-next-line
   const command = require(`../commands/${filePath}`);
   client.commands.set(command.name, command);
   guildArray.forEach((guild) => {
@@ -28,32 +24,30 @@ function registerCommand(client, guildArray, filePath) {
 }
 
 module.exports = {
-  event: 'ready',
-  execute(client, args, { config }) {
+  name: 'ready',
+  execute(client, args, { guildConfig }) {
     log.success(logText.succesfullyAuthenticated.replace('{{ botTag }}', client.user.tag));
 
     client.user.setPresence({
       activity: {
-        name: config.activity,
-        type: config.activityType,
+        name: guildConfig.activity,
+        type: guildConfig.activityType,
       },
     }).catch(log.error);
-    log.debug(logText.updatedPressence.replace('{{ activityType }}', config.activityType).replace('{{ activityText }}', config.activity));
+    log.debug(logText.updatedPressence.replace('{{ activityType }}', guildConfig.activityType).replace('{{ activityText }}', guildConfig.activity));
 
     /**
- * command loader
- */
-    const commands = fs.readdirSync('src/commands').filter((file) => file.endsWith('.js'));
-    for (const file of commands) {
+* command loader
+*/
+    readdirSync('src/commands').filter((file) => file.endsWith('.js')).forEach((file) => {
       registerCommand(client, client.guilds.cache, `${file}`);
-    }
+    });
 
-    fs.readdirSync('src/commands').forEach((item) => {
-      if (!item.includes('.')) {
-        const commands = fs.readdirSync(`src/commands/${item}`).filter((file) => file.endsWith('.js'));
-        for (const file of commands) {
-          registerCommand(client, client.guilds.cache, `${item}/${file}`);
-        }
+    readdirSync('src/commands').forEach((dir) => {
+      if (!dir.includes('.')) {
+        readdirSync(`src/commands/${dir}`).filter((file) => file.endsWith('.js')).forEach((file) => {
+          registerCommand(client, client.guilds.cache, `${dir}/${file}`);
+        });
       }
     });
 

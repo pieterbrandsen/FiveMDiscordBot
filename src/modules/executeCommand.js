@@ -3,17 +3,13 @@ const { ChildLogger } = require('leekslazylogger');
 
 const log = new ChildLogger();
 
-const languageName = require('../../user/config').language;
+const commandObject = require('./languageConfig').get('modules', 'executeCommand');
 
-const languageConfig = require(`../../user/languages/${languageName}`);
-
-const commandObject = languageConfig.modules.executeCommand;
-const { text } = commandObject;
 const { returnText } = commandObject;
 const { logText } = commandObject;
 
 module.exports = {
-  async execute(interaction, client, { config }) {
+  async execute(interaction, client, { guildConfig }) {
     async function createApiMessage(channel, content) {
       const apiMessage = await APIMessage.create(channel, content)
         .resolveData()
@@ -23,7 +19,7 @@ module.exports = {
     }
 
     const commandName = interaction.data.name;
-    const args = interaction.data.options;
+    const args = interaction.data.options || [];
 
     const command = client.commands.get(`${commandName}.`) || client.commands.get(commandName);
 
@@ -37,13 +33,16 @@ module.exports = {
       if (command.permission && !member.hasPermission(command.permission)) {
         log.console(logText.userHasNoCommandPerms.replace('{{ username }}', interaction.member.user.username).replace('{{ commandName }}', commandName));
         message = new MessageEmbed()
-          .setColor(config.err_colour)
+          .setColor(guildConfig.errColor)
           .setTitle(returnText.noPermsEmbedTitle)
           .setDescription(returnText.noPermsEmbedDescription.replace('{{ commandName }}', command.name).replace('{{ commandPerms }}', command.permission));
       } else {
-        message = await command.execute(client, args, interaction, { member, channel, config });
+        message = await command.execute(
+          client, args, interaction, { member, channel, guildConfig },
+        );
         // * LOG ARGS VAN SLASH COMMAND
         const argNames = args.reduce((acc, arg) => {
+          // eslint-disable-next-line no-param-reassign
           acc += ` ${arg.name}`;
           return acc;
         }, '');

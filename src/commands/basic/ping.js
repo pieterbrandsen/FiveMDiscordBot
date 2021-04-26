@@ -1,24 +1,20 @@
 const { MessageEmbed } = require('discord.js');
 
-const languageName = require('../../../user/config').language;
+const commandObject = require('../../modules/languageConfig').get('commands', 'ping');
 
-const languageConfig = require(`../../../user/languages/${languageName}`);
-
-const commandObject = languageConfig.commands.basic.ping;
 const { commandText } = commandObject;
-const { text } = commandObject;
 const { returnText } = commandObject;
-const { logText } = commandObject;
 
 module.exports = {
   name: commandText.name,
   description: commandText.description,
   permission: commandText.permission,
-  execute(client, args, interaction, { config }) {
+  execute(client, args, interaction, { guildConfig }) {
     const embed = new MessageEmbed()
       .setTitle('Pong!')
       .setDescription(returnText.currentPing.replace('{{ value }}', client.ws.ping))
-      .setColor(config.colour);
+      .setFooter(guildConfig.footerText)
+      .setColor(guildConfig.embedColor);
     return embed;
   },
 };

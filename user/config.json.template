@@ -1,22 +1,17 @@
 {
-  "token": "NzUwMDM3MjE2MTE3MzkxMzgw.X00slw.P2Z3zTT1d0jbwAPM3PA0u027hSw",
+  "apiPort": "5000",
   "language": "NL",
-  "serverName": "a",
+  "footerText": "Copyright Panda",
   "activity": "the bot developing itself :)",
   "activityType": "WATCHING",
-  "colour": "#009999",
-  "err_colour": "#E74C3C",
-  "suggestion": {
-    "enabled": "b",
-    "channelId": "c"
-  },
+  "errColor": "#E74C3C",
   "storage": {
     "type": "sqlite"
   },
   "logs": {
     "files": {
       "enabled": true,
-      "keep_for": 7
+      "keep_for": 14
     }
   },
   "debug": false,
