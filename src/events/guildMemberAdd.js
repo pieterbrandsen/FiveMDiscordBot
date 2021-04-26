@@ -66,7 +66,7 @@ module.exports = {
         canvas.width * 0.42, canvas.height * 0.50, maxLength,
       );
 
-      const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: 'gif', size: 256, dynamic: true }));
+      const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: 'png', size: 256, dynamic: true }));
       ctx.beginPath();
       ctx.arc(avatar.width / 2 + canvas.width * 0.12 + (256 - avatar.width) / 2,
         canvas.height / 2, 128, 0, Math.PI * 2, true);
@@ -80,12 +80,17 @@ module.exports = {
       await welcomeChannel.send(attachment);
     }
 
-    let channel;
+    if (guildConfig.welcomingSystem.dmMessageEnabled.toLowerCase() !== 'true') return;
+    const channel = member.dmChannel || await member.createDM();
     try {
-      channel = member.dmChannel || await member.createDM();
-    } catch (e) {
-      channel = member.channel;
-        }
-    //  let a = await channel.send("a");
+      await channel.send(text.dmMessageTest)
+        .then((msg) => {
+          msg.delete();
+        });
+    } catch (error) {
+      return;
+    }
+
+    await channel.send(guildConfig.welcomingSystem.dmMessageText);
   },
 };

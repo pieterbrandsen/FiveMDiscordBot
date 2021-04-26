@@ -106,6 +106,14 @@
             {
               "name": "message",
               "description":"Als je een tekst bericht gekozen hebt kan je nu invoeren wat je als beschrijving wilt. Met SHIFT+ENTER kan je een nieuwe regel invoeren."
+            },
+            {
+              "name": "dmMessageEnabled",
+              "description":"a"
+            },
+            {
+              "name": "dmMessageText",
+              "description":"b"
             }
           ],
           "verifySystem": [
@@ -257,7 +265,8 @@
           "Welkom {{ username }}, je hebt toch wel pizza meegenomen??"],
         "userJoinedGuild": {
           "title": "Welkom {{ username }} op {{ serverName }}!"
-        }
+        },
+        "dmMessageTest": "Heb jij je dm's open? Zo ja zie je dit berichtje mogelijk"
       },
       "returnText":{},
       "logText":{

@@ -1,14 +1,16 @@
 const { MessageEmbed } = require('discord.js');
+const { cloneDeep } = require('lodash');
 const { updateGuildConfig } = require('../modules/guildConfig');
-const {cloneDeep} = require('lodash');
 const commandObject = require('../modules/languageConfig').get('commands', 'config');
 
 const { commandText } = commandObject;
 const { text } = commandObject;
 const { returnText } = commandObject;
 
-const changeConfigValueMessageEmbed = (configName, description, configColor, footer) => new MessageEmbed().setTitle(text.changeConfigValueMessage.title.replace('{{ configValueName }}', configName)).setDescription(description).setColor(configColor).setFooter(footer);
-const changeConfigValueOfObjectMessageEmbed = (configName, description, configObjectName, configColor, footer) => new MessageEmbed().setTitle(text.changeConfigValueOfObjectValueMessage.title.replace('{{ configValueName }}', configName).replace('{{ configObjectName }}', configObjectName)).setDescription(description).setColor(configColor).setFooter(footer);
+const changeConfigValueMessageEmbed = (configName, description, configColor, footer) => new MessageEmbed().setTitle(text.changeConfigValueMessage.title.replace('{{ configValueName }}', configName)).setDescription(description).setColor(configColor)
+  .setFooter(footer);
+const changeConfigValueOfObjectMessageEmbed = (configName, description, configObjectName, configColor, footer) => new MessageEmbed().setTitle(text.changeConfigValueOfObjectValueMessage.title.replace('{{ configValueName }}', configName).replace('{{ configObjectName }}', configObjectName)).setDescription(description).setColor(configColor)
+  .setFooter(footer);
 
 module.exports = {
   name: commandText.name,
@@ -78,20 +80,23 @@ module.exports = {
           try {
             await updateGuildConfig(updatedConfig);
             channel.send(new MessageEmbed()
-            .setTitle(returnText.messageCollectorEnd.success.title)
-            .setDescription(returnText.messageCollectorEnd.success.description)
-            .setColor(guildConfig.colour).setFooter(guildConfig.footerText));
-            } catch (error) {
-              channel.send(new MessageEmbed()
+              .setTitle(returnText.messageCollectorEnd.success.title)
+              .setDescription(returnText.messageCollectorEnd.success.description)
+              .setColor(guildConfig.colour)
+              .setFooter(guildConfig.footerText));
+          } catch (error) {
+            channel.send(new MessageEmbed()
               .setTitle(returnText.messageCollectorEnd.error.title)
               .setDescription(returnText.messageCollectorEnd.error.description)
-              .setColor(guildConfig.colour).setFooter(guildConfig.footerText));
-            }
+              .setColor(guildConfig.colour)
+              .setFooter(guildConfig.footerText));
+          }
         } else if (reason === 'time') {
           channel.send(new MessageEmbed()
             .setTitle(returnText.messageCollectorExpired.title)
             .setDescription(returnText.messageCollectorExpired.description)
-            .setColor(guildConfig.colour).setFooter(guildConfig.footerText));
+            .setColor(guildConfig.colour)
+            .setFooter(guildConfig.footerText));
         }
 
         return undefined;
@@ -144,21 +149,24 @@ module.exports = {
         if (reason === 'MAX') {
           try {
             await updateGuildConfig(updatedConfig);
-          channel.send(new MessageEmbed()
-          .setTitle(returnText.messageCollectorEnd.success.title)
-          .setDescription(returnText.messageCollectorEnd.success.description)
-          .setColor(guildConfig.colour).setFooter(guildConfig.footerText));
+            channel.send(new MessageEmbed()
+              .setTitle(returnText.messageCollectorEnd.success.title)
+              .setDescription(returnText.messageCollectorEnd.success.description)
+              .setColor(guildConfig.colour)
+              .setFooter(guildConfig.footerText));
           } catch (error) {
             channel.send(new MessageEmbed()
-            .setTitle(returnText.messageCollectorEnd.error.title)
-            .setDescription(returnText.messageCollectorEnd.error.description)
-            .setColor(guildConfig.colour).setFooter(guildConfig.footerText));
+              .setTitle(returnText.messageCollectorEnd.error.title)
+              .setDescription(returnText.messageCollectorEnd.error.description)
+              .setColor(guildConfig.colour)
+              .setFooter(guildConfig.footerText));
           }
         } else if (reason === 'time') {
           channel.send(new MessageEmbed()
             .setTitle(returnText.messageCollectorExpired.title)
             .setDescription(returnText.messageCollectorExpired.description)
-            .setColor(guildConfig.colour).setFooter(guildConfig.footerText));
+            .setColor(guildConfig.colour)
+            .setFooter(guildConfig.footerText));
         }
 
         return undefined;

@@ -20,6 +20,8 @@ const setGuildConfig = async (guildId, globalConfig) => {
     messageType: 'photo',
     channelId: '',
     message: '',
+    dmMessageEnabled: 'false',
+    dmMessageText: '',
   });
   const config = await Config.create({
     guildId,
@@ -66,13 +68,7 @@ module.exports = {
         id: config.suggestionConfigId,
       },
     });
-    guildConfig.suggestionSystem = {
-      id: suggestionConfig.id,
-      enabled: suggestionConfig.enabled,
-      channelId: suggestionConfig.channelId,
-      discussionChannelEnabled: suggestionConfig.discussionChannelEnabled,
-      discussionChannelId: suggestionConfig.discussionChannelId,
-    };
+    guildConfig.suggestionSystem = suggestionConfig;
 
     const verifyConfig = await VerifyConfig.findOne({
       where: {
@@ -128,6 +124,8 @@ module.exports = {
       messageType: guildConfig.welcomingSystem.messageType,
       channelId: guildConfig.welcomingSystem.channelId,
       message: guildConfig.welcomingSystem.message,
+      dmMessageEnabled: guildConfig.welcomingSystem.dmMessageEnabled,
+      dmMessageText: guildConfig.welcomingSystem.dmMessageText,
     }, {
       where: {
         id: guildConfig.welcomingSystem.id,

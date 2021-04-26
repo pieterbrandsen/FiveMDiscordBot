@@ -18,7 +18,8 @@ module.exports = {
       return new MessageEmbed()
         .setTitle(returnText.noSuggestionChannelEmbed.title)
         .setDescription(returnText.noSuggestionChannelEmbed.description)
-        .setColor(guildConfig.embedColor).setFooter(guildConfig.footerText);
+        .setColor(guildConfig.embedColor)
+        .setFooter(guildConfig.footerText);
     }
 
     if (args[0].name === commandText.subNames[0]) {
@@ -28,7 +29,8 @@ module.exports = {
         .setTitle(title)
         .setDescription(message)
         .setAuthor(returnText.suggestionFrom.replace('{{ displayName }}', member.displayName))
-        .setColor(guildConfig.embedColor).setFooter(guildConfig.footerText);
+        .setColor(guildConfig.embedColor)
+        .setFooter(guildConfig.footerText);
 
       const msg = await suggestionChannel.send(suggestionEmbed);
       await msg.react('👍');
@@ -42,13 +44,15 @@ module.exports = {
           channel.send(new MessageEmbed()
             .setTitle(returnText.noSuggestionDiscussionChannelEmbed.title)
             .setDescription(returnText.noSuggestionDiscussionChannelEmbed.description)
-            .setColor(guildConfig.embedColor).setFooter(guildConfig.footerText));
+            .setColor(guildConfig.embedColor)
+            .setFooter(guildConfig.footerText));
         } else {
           const discussionChannelMsg = new MessageEmbed()
             .setTitle(text.suggestionDiscussion.title)
             .setDescription(text.suggestionDiscussion.description.replace('{{ messageTitle }}', title).replace('{{ messageDescription }}', message))
             .setAuthor(returnText.suggestionFrom.replace('{{ displayName }}', member.displayName))
-            .setColor(guildConfig.embedColor).setFooter(guildConfig.footerText);
+            .setColor(guildConfig.embedColor)
+            .setFooter(guildConfig.footerText);
           await suggestionDiscussionChannel.send(discussionChannelMsg);
         }
       }
