@@ -3,3 +3,4 @@ node_modules
 logs
 
 user/config.json
+user/storage.db

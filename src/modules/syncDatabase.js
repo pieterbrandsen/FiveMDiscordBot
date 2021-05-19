@@ -18,6 +18,7 @@ module.exports = (sequelize) => {
   VerifyConfig.init({
     unverifiedRoleId: DataTypes.STRING,
     verifiedRoleId: DataTypes.STRING,
+    selfVerifyingAllowed: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'verifyConfig',
@@ -40,6 +41,7 @@ module.exports = (sequelize) => {
   Config.init({
     guildId: DataTypes.BIGINT,
     guildName: DataTypes.STRING,
+    serverIp: DataTypes.STRING,
     embedColor: DataTypes.STRING,
     suggestionConfigId: DataTypes.BIGINT,
     verifyConfigId: DataTypes.BIGINT,

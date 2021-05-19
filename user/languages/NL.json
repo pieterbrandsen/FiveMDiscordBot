@@ -72,6 +72,7 @@
         "changeableConfigValues":{
           "guildName":"Vul de naam in die je wilt gebruiken als **server naam**.",
           "embedColor":"Vul een Hexadecimal kleur in zoals #FF0000 (rood).",
+          "serverIp": "Wat is het ip van de server, vergeet niet de poort!",
           "suggestionSystem":[
             {
               "name":"enabled",
@@ -124,6 +125,10 @@
             {
               "name": "verifiedRoleId",
               "description":"De rol die toegevoegd word als een gebruiker geverifeerd wordt."
+            },
+            {
+              "name": "selfVerifyingAllowed",
+              "description": "Kies TRUE als je wilt toestaan dat gebruikers zichzelf mogen veriferen anders kies FALSE"
             }
           ]
         },
@@ -160,9 +165,6 @@
     "suggestion":{
       "commandText":{
         "name":"suggestie",
-        "subNames":[
-          "nieuw"
-        ],
         "description":"Check of de bot nog actief is",
         "permission":"",
         "options":[
@@ -213,6 +215,43 @@
         }
       },
       "logText":{}
+    },
+    "verify": {
+      "commandText":{
+        "name":"verifeer",
+        "description":"Pas de de config aan voor de server",
+        "permission": "MANAGE_USERS",
+        "options":[
+          {
+            "name":"gebruiker",
+            "description":"Geef de gebruiker op die geverifeerd moet worden",
+            "type":6,
+            "required":false
+          }
+        ]
+      },
+      "text": {
+        "codeInDmMessageEmbed": {
+          "title": "Je code is {{ code }}, voer dit in het scherm wat je ziet in game op te starten met spelen!"
+        }
+      },
+      "returnText":{
+        "responseCodeIsNotOk": "Er ging iets mis, kan je het later opnieuw proberen?",
+        "successfullyStartedProcessDmEmbed": {
+          "title":"Je hebt je code in je DM ontvangen"
+        },
+        "successfullyStartedProcessEmbed": {
+          "title": "Ik kon je geen DM sturen!",
+          "description": "Je code is {{ code }} maar voer hem snel in omdat iedereen hem kan gebruiken!"
+        },
+        "noPermsEmbed": {
+          "title": "Je hebt geen permissie om jezelf te veriferen",
+          "description": "Vraag een stafflid om hulp"
+        }
+      },
+      "logText":{
+        "userLeftGuild": "{{ userTag }} has left the guild"
+      }
     }
   },
   "modules":{

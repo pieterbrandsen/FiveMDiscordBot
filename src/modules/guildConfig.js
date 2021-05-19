@@ -14,6 +14,7 @@ const setGuildConfig = async (guildId, globalConfig) => {
   const verifyConfig = await VerifyConfig.create({
     unverifiedRoleId: '',
     verifiedRoleId: '',
+    selfVerifyingAllowed: 'false',
   });
   const welcomingConfig = await WelcomingConfig.create({
     enabled: 'false',
@@ -26,6 +27,7 @@ const setGuildConfig = async (guildId, globalConfig) => {
   const config = await Config.create({
     guildId,
     guildName: 'USE CONFIG COMMAND TO SET THIS',
+    serverIp: '12.345.678.90:12345',
     embedColor: '#FF0000',
     suggestionConfigId: suggestionConfig.id,
     verifyConfigId: verifyConfig.id,
@@ -33,6 +35,7 @@ const setGuildConfig = async (guildId, globalConfig) => {
   });
 
   guildConfig.guildName = config.guildName;
+  guildConfig.serverIp = config.serverIp;
   guildConfig.embedColor = config.embedColor;
   guildConfig.suggestionSystem = suggestionConfig;
   guildConfig.verifySystem = verifyConfig;
@@ -86,12 +89,14 @@ module.exports = {
 
     guildConfig.id = config.id;
     guildConfig.guildName = config.guildName;
+    guildConfig.serverIp = config.serverIp;
     guildConfig.embedColor = config.embedColor;
     return guildConfig;
   },
   updateGuildConfig: async (guildConfig) => {
     await Config.update({
       guildName: guildConfig.guildName,
+      serverIp: guildConfig.serverIp,
       embedColor: guildConfig.embedColor,
     }, {
       where: {
@@ -113,6 +118,7 @@ module.exports = {
     await VerifyConfig.update({
       unverifiedRoleId: guildConfig.verifySystem.unverifiedRoleId,
       verifiedRoleId: guildConfig.verifySystem.verifiedRoleId,
+      selfVerifyingAllowed: guildConfig.verifySystem.selfVerifyingAllowed,
     }, {
       where: {
         id: guildConfig.verifySystem.id,
