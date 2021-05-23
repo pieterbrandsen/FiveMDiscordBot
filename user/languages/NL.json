@@ -44,7 +44,7 @@
       },
       "bugReport":{
         "commandText":{
-          "name":"bug report",
+          "name":"bug-report",
           "description":"Stuur een bug report naar staff",
           "permission":"",
           "options":""
