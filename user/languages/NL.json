@@ -42,6 +42,19 @@
         },
         "logText":{}
       },
+      "bugReport":{
+        "commandText":{
+          "name":"bug report",
+          "description":"Stuur een bug report naar staff",
+          "permission":"",
+          "options":""
+        },
+        "text":{},
+        "returnText":{
+          "successfullySended":"Uw bug report is succesvol ontvangen door het staff team, hij zal zo snel mogelijk opgelost worden."
+        },
+        "logText":{}
+      },
     "config":{
       "commandText":{
         "name":"config",
