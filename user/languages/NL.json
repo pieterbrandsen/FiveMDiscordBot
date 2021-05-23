@@ -26,6 +26,22 @@
         },
         "logText":{}
       },
+      "ip": {
+        "commandText":{
+          "name":"ip",
+          "description":"Zo krijg je het server IP als je het niet meer weet",
+          "permission":"",
+          "options":""
+        },
+        "text":{},
+        "returnText":{
+          "pingEmbed": {
+            "title":"Het IP van de server is {{ serverIp }}",
+            "description": "Je kan de server joinen via het F8 menu, of vinden in de server list."
+          }
+        },
+        "logText":{}
+      },
     "config":{
       "commandText":{
         "name":"config",
@@ -203,7 +219,7 @@
         "suggestionFrom":"Suggestie van {{ displayName }}",
         "createdSuggestion":{
           "title":"Je suggestie is aangemaakt!",
-          "description":"Hij verstuurd in <#{{ suggestionChannelId }}>"
+          "description":"Hij is verstuurd in <#{{ suggestionChannelId }}>"
         },
         "noSuggestionChannelEmbed":{
           "title":"Ik kon geen suggestie kanaal vinden",
@@ -238,7 +254,7 @@
       "returnText":{
         "responseCodeIsNotOk": "Er ging iets mis, kan je het later opnieuw proberen?",
         "successfullyStartedProcessDmEmbed": {
-          "title":"Je hebt je code in je DM ontvangen"
+          "title":"De code is DM ontvangen"
         },
         "successfullyStartedProcessEmbed": {
           "title": "Ik kon je geen DM sturen!",

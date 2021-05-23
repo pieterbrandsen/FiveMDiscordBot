@@ -5,11 +5,14 @@ const commandObject = require('../modules/languageConfig').get('commands', 'veri
 
 const { text, commandText, returnText } = commandObject;
 
-async function verifyUser(userId) {
-  const link = 'https://api.weatherstack.com/current';
-  const response = await fetch(`${link}?userId=${userId}`);
+async function verifyUser(userId, ip) {
+  try {
+  const response = await fetch(`https://${ip}?userId=${userId}`);
   const data = await response.json();
   return data;
+} catch (error) {
+  return {code:200};
+  }
 }
 
 module.exports = {
@@ -18,7 +21,7 @@ module.exports = {
   options: commandText.options,
   async execute(client, args, interaction, { member, guildConfig, channel }) {
     let userIdToVerify = 0;
-    if (guildConfig.verifySystem.selfVerifyingAllowed.ToLowerCase() === 'false' && args.length === 0) {
+    if (guildConfig.verifySystem.selfVerifyingAllowed.toLowerCase() === 'true' && args.length === 0) {
       userIdToVerify = member.id;
     } else if (!member.hasPermission(commandText.permission)) {
       return new MessageEmbed()
@@ -28,7 +31,7 @@ module.exports = {
       userIdToVerify = args[0].value;
     }
 
-    const result = await verifyUser(userIdToVerify);
+    const result = await verifyUser(userIdToVerify, guildConfig.serverIp);
     if (result.code !== 200) {
       return new MessageEmbed().setTitle(returnText.responseCodeIsNotOk);
     }
